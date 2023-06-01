@@ -13,10 +13,43 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: windowScene)        // 탭바컨트롤러의 생성
+        
+        let tabBarC = UITabBarController()
+        
+        // 첫번째 화면은 네비게이션컨트롤러로 만들기 (기본루트뷰 설정)
+        let mainVC = UINavigationController(rootViewController: MainViewController())
+        let someVC = UINavigationController(rootViewController: UIViewController())
+        
+        // 탭바 이름들 설정
+        mainVC.title = "Main"
+        someVC.title = "Some"
+
+        
+        // 탭바로 사용하기 위한 뷰 컨트롤러들 설정
+        tabBarC.setViewControllers([
+            mainVC,
+            someVC
+        ], animated: true)
+        
+        tabBarC.selectedIndex = 0
+        
+        tabBarC.modalPresentationStyle = .fullScreen
+        tabBarC.tabBar.backgroundColor = .white
+        tabBarC.tabBar.tintColor = .systemTeal
+        tabBarC.tabBar.layer.borderWidth = 0.3
+        tabBarC.tabBar.layer.borderColor = UIColor.lightGray.cgColor
+        
+        // 탭바 이미지 설정
+        guard let items = tabBarC.tabBar.items else { return }
+        items[0].image = UIImage(systemName: "magnifyingglass")
+        items[1].image = UIImage(systemName: "camera.fill")
+        
+        // 기본루트뷰를 탭바컨트롤러로 설정
+        window?.rootViewController = tabBarC
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		B216EAE22A227FB500A18C83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE12A227FB500A18C83 /* AppDelegate.swift */; };
 		B216EAE42A227FB500A18C83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE32A227FB500A18C83 /* SceneDelegate.swift */; };
-		B216EAE62A227FB500A18C83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE52A227FB500A18C83 /* ViewController.swift */; };
-		B216EAE92A227FB500A18C83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B216EAE72A227FB500A18C83 /* Main.storyboard */; };
+		B216EAE62A227FB500A18C83 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE52A227FB500A18C83 /* MainViewController.swift */; };
 		B216EAEB2A227FB600A18C83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B216EAEA2A227FB600A18C83 /* Assets.xcassets */; };
 		B216EAEE2A227FB600A18C83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B216EAEC2A227FB600A18C83 /* LaunchScreen.storyboard */; };
 		B216EAF92A227FB600A18C83 /* JDR_TodoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAF82A227FB600A18C83 /* JDR_TodoTests.swift */; };
@@ -39,8 +38,7 @@
 		B216EADE2A227FB500A18C83 /* JDR Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JDR Todo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B216EAE12A227FB500A18C83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B216EAE32A227FB500A18C83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B216EAE52A227FB500A18C83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B216EAE82A227FB500A18C83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B216EAE52A227FB500A18C83 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B216EAEA2A227FB600A18C83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B216EAED2A227FB600A18C83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B216EAEF2A227FB600A18C83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,8 +99,7 @@
 			children = (
 				B216EAE12A227FB500A18C83 /* AppDelegate.swift */,
 				B216EAE32A227FB500A18C83 /* SceneDelegate.swift */,
-				B216EAE52A227FB500A18C83 /* ViewController.swift */,
-				B216EAE72A227FB500A18C83 /* Main.storyboard */,
+				B216EAE52A227FB500A18C83 /* MainViewController.swift */,
 				B216EAEA2A227FB600A18C83 /* Assets.xcassets */,
 				B216EAEC2A227FB600A18C83 /* LaunchScreen.storyboard */,
 				B216EAEF2A227FB600A18C83 /* Info.plist */,
@@ -233,7 +230,6 @@
 			files = (
 				B216EAEE2A227FB600A18C83 /* LaunchScreen.storyboard in Resources */,
 				B216EAEB2A227FB600A18C83 /* Assets.xcassets in Resources */,
-				B216EAE92A227FB500A18C83 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B216EAE62A227FB500A18C83 /* ViewController.swift in Sources */,
+				B216EAE62A227FB500A18C83 /* MainViewController.swift in Sources */,
 				B216EAE22A227FB500A18C83 /* AppDelegate.swift in Sources */,
 				B216EAE42A227FB500A18C83 /* SceneDelegate.swift in Sources */,
 			);
@@ -297,14 +293,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B216EAE72A227FB500A18C83 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B216EAE82A227FB500A18C83 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B216EAEC2A227FB600A18C83 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -442,9 +430,8 @@
 				INFOPLIST_FILE = "JDR Todo/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,9 +439,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.avocadojapan.JDR-Todo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -470,9 +460,8 @@
 				INFOPLIST_FILE = "JDR Todo/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,9 +469,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.avocadojapan.JDR-Todo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
