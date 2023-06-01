@@ -11,6 +11,7 @@ import SnapKit
 
 final class MainVC: UIViewController {
     fileprivate let searchBar = SearchBarView()
+    fileprivate let todoTabelView = TodoTabelView()
     
     fileprivate lazy var titleLabel = UILabel().then {
 //        $0.backgroundColor = .cyan
@@ -76,6 +77,7 @@ extension MainVC {
         topBarStackView.addSubview(titleLabel)
         topBarStackView.addSubview(addButton)
         self.view.addSubview(searchBar)
+        self.view.addSubview(todoTabelView)
 
         topBarStackView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(5)
@@ -97,7 +99,18 @@ extension MainVC {
             $0.top.equalTo(topBarStackView.snp.bottom).offset(5)
             $0.horizontalEdges.equalToSuperview().inset(15)
         }
+        
+        todoTabelView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
 
+//        starListTV.snp.makeConstraints {
+//            $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+//            $0.left.equalTo(self.view.safeAreaLayoutGuide).offset(10)
+//            $0.right.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
+//        }
     }
 }
 
