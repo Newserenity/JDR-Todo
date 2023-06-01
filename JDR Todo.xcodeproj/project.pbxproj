@@ -9,12 +9,22 @@
 /* Begin PBXBuildFile section */
 		B216EAE22A227FB500A18C83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE12A227FB500A18C83 /* AppDelegate.swift */; };
 		B216EAE42A227FB500A18C83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE32A227FB500A18C83 /* SceneDelegate.swift */; };
-		B216EAE62A227FB500A18C83 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE52A227FB500A18C83 /* MainViewController.swift */; };
+		B216EAE62A227FB500A18C83 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAE52A227FB500A18C83 /* MainVC.swift */; };
 		B216EAEB2A227FB600A18C83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B216EAEA2A227FB600A18C83 /* Assets.xcassets */; };
 		B216EAEE2A227FB600A18C83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B216EAEC2A227FB600A18C83 /* LaunchScreen.storyboard */; };
 		B216EAF92A227FB600A18C83 /* JDR_TodoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EAF82A227FB600A18C83 /* JDR_TodoTests.swift */; };
 		B216EB032A227FB600A18C83 /* JDR_TodoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EB022A227FB600A18C83 /* JDR_TodoUITests.swift */; };
 		B216EB052A227FB600A18C83 /* JDR_TodoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216EB042A227FB600A18C83 /* JDR_TodoUITestsLaunchTests.swift */; };
+		B25885752A28873F001268A9 /* TodoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25885742A28873F001268A9 /* TodoCardView.swift */; };
+		B25885772A2887D1001268A9 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25885762A2887D1001268A9 /* UIViewController+Ext.swift */; };
+		B25885792A2887F4001268A9 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25885782A2887F4001268A9 /* UIView+Ext.swift */; };
+		B2964A7A2A28646E003F3179 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2964A792A28646E003F3179 /* SettingVC.swift */; };
+		B2964A7D2A286761003F3179 /* RxAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A7C2A286761003F3179 /* RxAlamofire */; };
+		B2964A802A286795003F3179 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A7F2A286795003F3179 /* RxCocoa */; };
+		B2964A822A286795003F3179 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A812A286795003F3179 /* RxRelay */; };
+		B2964A842A286795003F3179 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A832A286795003F3179 /* RxSwift */; };
+		B2964A8D2A286986003F3179 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A8C2A286986003F3179 /* Then */; };
+		B2964A902A2869A6003F3179 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A8F2A2869A6003F3179 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +48,7 @@
 		B216EADE2A227FB500A18C83 /* JDR Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JDR Todo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B216EAE12A227FB500A18C83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B216EAE32A227FB500A18C83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B216EAE52A227FB500A18C83 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B216EAE52A227FB500A18C83 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		B216EAEA2A227FB600A18C83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B216EAED2A227FB600A18C83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B216EAEF2A227FB600A18C83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +57,10 @@
 		B216EAFE2A227FB600A18C83 /* JDR TodoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JDR TodoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B216EB022A227FB600A18C83 /* JDR_TodoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JDR_TodoUITests.swift; sourceTree = "<group>"; };
 		B216EB042A227FB600A18C83 /* JDR_TodoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JDR_TodoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B25885742A28873F001268A9 /* TodoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCardView.swift; sourceTree = "<group>"; };
+		B25885762A2887D1001268A9 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		B25885782A2887F4001268A9 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		B2964A792A28646E003F3179 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +68,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2964A8D2A286986003F3179 /* Then in Frameworks */,
+				B2964A822A286795003F3179 /* RxRelay in Frameworks */,
+				B2964A802A286795003F3179 /* RxCocoa in Frameworks */,
+				B2964A902A2869A6003F3179 /* SnapKit in Frameworks */,
+				B2964A842A286795003F3179 /* RxSwift in Frameworks */,
+				B2964A7D2A286761003F3179 /* RxAlamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +119,12 @@
 			children = (
 				B216EAE12A227FB500A18C83 /* AppDelegate.swift */,
 				B216EAE32A227FB500A18C83 /* SceneDelegate.swift */,
-				B216EAE52A227FB500A18C83 /* MainViewController.swift */,
+				B2964A862A2867C7003F3179 /* Controllers */,
+				B2964A872A2867D5003F3179 /* Components */,
+				B2964A852A2867BF003F3179 /* Models */,
+				B2964A882A286925003F3179 /* Networking */,
+				B2964A892A286939003F3179 /* Extentions */,
+				B2964A8A2A28693F003F3179 /* Helper */,
 				B216EAEA2A227FB600A18C83 /* Assets.xcassets */,
 				B216EAEC2A227FB600A18C83 /* LaunchScreen.storyboard */,
 				B216EAEF2A227FB600A18C83 /* Info.plist */,
@@ -124,6 +149,53 @@
 			path = "JDR TodoUITests";
 			sourceTree = "<group>";
 		};
+		B2964A852A2867BF003F3179 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B2964A862A2867C7003F3179 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B216EAE52A227FB500A18C83 /* MainVC.swift */,
+				B2964A792A28646E003F3179 /* SettingVC.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B2964A872A2867D5003F3179 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B25885742A28873F001268A9 /* TodoCardView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		B2964A882A286925003F3179 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		B2964A892A286939003F3179 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				B25885762A2887D1001268A9 /* UIViewController+Ext.swift */,
+				B25885782A2887F4001268A9 /* UIView+Ext.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		B2964A8A2A28693F003F3179 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,6 +212,14 @@
 			dependencies = (
 			);
 			name = "JDR Todo";
+			packageProductDependencies = (
+				B2964A7C2A286761003F3179 /* RxAlamofire */,
+				B2964A7F2A286795003F3179 /* RxCocoa */,
+				B2964A812A286795003F3179 /* RxRelay */,
+				B2964A832A286795003F3179 /* RxSwift */,
+				B2964A8C2A286986003F3179 /* Then */,
+				B2964A8F2A2869A6003F3179 /* SnapKit */,
+			);
 			productName = "JDR Todo";
 			productReference = B216EADE2A227FB500A18C83 /* JDR Todo.app */;
 			productType = "com.apple.product-type.application";
@@ -212,6 +292,12 @@
 				Base,
 			);
 			mainGroup = B216EAD52A227FB500A18C83;
+			packageReferences = (
+				B2964A7B2A286761003F3179 /* XCRemoteSwiftPackageReference "RxAlamofire" */,
+				B2964A7E2A286795003F3179 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				B2964A8B2A286986003F3179 /* XCRemoteSwiftPackageReference "Then" */,
+				B2964A8E2A2869A6003F3179 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = B216EADF2A227FB500A18C83 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -254,8 +340,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B216EAE62A227FB500A18C83 /* MainViewController.swift in Sources */,
+				B25885752A28873F001268A9 /* TodoCardView.swift in Sources */,
+				B216EAE62A227FB500A18C83 /* MainVC.swift in Sources */,
+				B25885772A2887D1001268A9 /* UIViewController+Ext.swift in Sources */,
 				B216EAE22A227FB500A18C83 /* AppDelegate.swift in Sources */,
+				B25885792A2887F4001268A9 /* UIView+Ext.swift in Sources */,
+				B2964A7A2A28646E003F3179 /* SettingVC.swift in Sources */,
 				B216EAE42A227FB500A18C83 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,6 +684,74 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2964A7B2A286761003F3179 /* XCRemoteSwiftPackageReference "RxAlamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxAlamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		B2964A7E2A286795003F3179 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		B2964A8B2A286986003F3179 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		B2964A8E2A2869A6003F3179 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B2964A7C2A286761003F3179 /* RxAlamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2964A7B2A286761003F3179 /* XCRemoteSwiftPackageReference "RxAlamofire" */;
+			productName = RxAlamofire;
+		};
+		B2964A7F2A286795003F3179 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2964A7E2A286795003F3179 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		B2964A812A286795003F3179 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2964A7E2A286795003F3179 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		B2964A832A286795003F3179 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2964A7E2A286795003F3179 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		B2964A8C2A286986003F3179 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2964A8B2A286986003F3179 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		B2964A8F2A2869A6003F3179 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2964A8E2A2869A6003F3179 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B216EAD62A227FB500A18C83 /* Project object */;
 }

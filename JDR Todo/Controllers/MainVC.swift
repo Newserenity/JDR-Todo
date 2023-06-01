@@ -7,7 +7,9 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainVC: UIViewController {
+    
+    UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()

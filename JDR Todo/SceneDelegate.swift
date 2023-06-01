@@ -20,18 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarC = UITabBarController()
         
         // 첫번째 화면은 네비게이션컨트롤러로 만들기 (기본루트뷰 설정)
-        let mainVC = UINavigationController(rootViewController: MainViewController())
-        let someVC = UINavigationController(rootViewController: UIViewController())
+        let mainVC = UINavigationController(rootViewController: MainVC())
+        let settingVC = UINavigationController(rootViewController: SettingVC())
         
         // 탭바 이름들 설정
         mainVC.title = "Main"
-        someVC.title = "Some"
+        settingVC.title = "Setting"
 
         
         // 탭바로 사용하기 위한 뷰 컨트롤러들 설정
         tabBarC.setViewControllers([
             mainVC,
-            someVC
+            settingVC
         ], animated: true)
         
         tabBarC.selectedIndex = 0
@@ -44,8 +44,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // 탭바 이미지 설정
         guard let items = tabBarC.tabBar.items else { return }
-        items[0].image = UIImage(systemName: "magnifyingglass")
-        items[1].image = UIImage(systemName: "camera.fill")
+        items[0].image = UIImage(systemName: "list.bullet")
+        items[1].image = UIImage(systemName: "command")
         
         // 기본루트뷰를 탭바컨트롤러로 설정
         window?.rootViewController = tabBarC
