@@ -18,6 +18,8 @@
 		B25885752A28873F001268A9 /* TodoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25885742A28873F001268A9 /* TodoCardView.swift */; };
 		B25885772A2887D1001268A9 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25885762A2887D1001268A9 /* UIViewController+Ext.swift */; };
 		B25885792A2887F4001268A9 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25885782A2887F4001268A9 /* UIView+Ext.swift */; };
+		B258857B2A28AD26001268A9 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B258857A2A28AD26001268A9 /* SearchBarView.swift */; };
+		B258857E2A28B861001268A9 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B258857D2A28B861001268A9 /* TodoTableViewCell.swift */; };
 		B2964A7A2A28646E003F3179 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2964A792A28646E003F3179 /* SettingVC.swift */; };
 		B2964A7D2A286761003F3179 /* RxAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A7C2A286761003F3179 /* RxAlamofire */; };
 		B2964A802A286795003F3179 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A7F2A286795003F3179 /* RxCocoa */; };
@@ -60,6 +62,8 @@
 		B25885742A28873F001268A9 /* TodoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCardView.swift; sourceTree = "<group>"; };
 		B25885762A2887D1001268A9 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		B25885782A2887F4001268A9 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		B258857A2A28AD26001268A9 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		B258857D2A28B861001268A9 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
 		B2964A792A28646E003F3179 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +153,14 @@
 			path = "JDR TodoUITests";
 			sourceTree = "<group>";
 		};
+		B258857C2A28B838001268A9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B258857D2A28B861001268A9 /* TodoTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		B2964A852A2867BF003F3179 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +181,8 @@
 			isa = PBXGroup;
 			children = (
 				B25885742A28873F001268A9 /* TodoCardView.swift */,
+				B258857A2A28AD26001268A9 /* SearchBarView.swift */,
+				B258857C2A28B838001268A9 /* Cells */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -343,7 +357,9 @@
 				B25885752A28873F001268A9 /* TodoCardView.swift in Sources */,
 				B216EAE62A227FB500A18C83 /* MainVC.swift in Sources */,
 				B25885772A2887D1001268A9 /* UIViewController+Ext.swift in Sources */,
+				B258857E2A28B861001268A9 /* TodoTableViewCell.swift in Sources */,
 				B216EAE22A227FB500A18C83 /* AppDelegate.swift in Sources */,
+				B258857B2A28AD26001268A9 /* SearchBarView.swift in Sources */,
 				B25885792A2887F4001268A9 /* UIView+Ext.swift in Sources */,
 				B2964A7A2A28646E003F3179 /* SettingVC.swift in Sources */,
 				B216EAE42A227FB500A18C83 /* SceneDelegate.swift in Sources */,
