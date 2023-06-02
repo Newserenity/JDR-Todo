@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarC.modalPresentationStyle = .fullScreen
         tabBarC.tabBar.backgroundColor = .white
-        tabBarC.tabBar.tintColor = .systemTeal
+        tabBarC.tabBar.tintColor = .systemOrange
         tabBarC.tabBar.layer.borderWidth = 0.3
         tabBarC.tabBar.layer.borderColor = UIColor.lightGray.cgColor
         

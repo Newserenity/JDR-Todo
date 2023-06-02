@@ -18,7 +18,7 @@ final class TodoTableViewCell: UITableViewCell {
     
     fileprivate lazy var titleLabel = UILabel().then {
         $0.textColor = .darkText
-        $0.font = .systemFont(ofSize: 18, weight: .bold)
+        $0.font = .systemFont(ofSize: 17, weight: .semibold)
         $0.textAlignment = .left
         $0.text = "JDR RxSwift Demo"
         
@@ -82,14 +82,23 @@ final class TodoTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+            
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
+    }
 }
 
 
 // MARK: - Autolayout 관련
 extension TodoTableViewCell {
     fileprivate func configLayout() {
-        self.backgroundColor = .systemGray6
-        self.layer.cornerRadius = 10
+       
+        self.contentView.clipsToBounds = true
+
+        contentView.layer.cornerRadius = 10
+        self.contentView.layer.backgroundColor = UIColor.systemGray6.cgColor
         
         self.contentView.setNeedsLayout()
         self.contentView.layoutIfNeeded()
@@ -108,6 +117,10 @@ extension TodoTableViewCell {
 
         dateStackView.addArrangedSubview(createdDate)
         dateStackView.addArrangedSubview(lastModifiedDate)
+        
+//        self.contentView.snp.makeConstraints {
+//            $0.edges.equalToSuperview().inset(12)
+//        }
         
         verticalStackView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(12)

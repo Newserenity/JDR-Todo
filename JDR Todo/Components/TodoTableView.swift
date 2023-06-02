@@ -64,7 +64,7 @@ extension TodoTabelView: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension TodoTabelView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90 // 셀 높이 값
+        return 110 // 셀 높이 값
     }
     
 //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -84,6 +84,18 @@ extension TodoTabelView: UITableViewDelegate {
         
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            let detailViewController = DetailVC()
+            
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                if let sceneDelegate = scene.delegate as? SceneDelegate {
+                    sceneDelegate.window?.rootViewController?.present(detailViewController, animated: true, completion: nil)
+                }
+            }
     }
 
 }

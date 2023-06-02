@@ -23,10 +23,10 @@ final class MainVC: UIViewController {
     
     private var config = UIButton.Configuration.filled()
     fileprivate lazy var addButton = UIButton().then {
-//        $0.addTarget(self, action: #selector(btnPressed), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(btnPressed), for: .touchUpInside)
         $0.configuration = .filled()
         config.title = "+"
-        config.baseBackgroundColor = .systemTeal
+        config.baseBackgroundColor = .systemOrange
         config.cornerStyle = .capsule
         config.titlePadding = 10
         $0.configuration = self.config
@@ -59,6 +59,10 @@ final class MainVC: UIViewController {
         super.viewWillDisappear(animated)
         // navbar hide setting
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    @objc private func btnPressed() {
+        present(UploadVC(), animated: true, completion: nil)
     }
 }
 
