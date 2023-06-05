@@ -118,3 +118,16 @@ extension MainVC {
     }
 }
 
+// MARK: - Preview 관련
+#if DEBUG
+
+import SwiftUI
+
+struct MainVC_Previews: PreviewProvider {
+    static var previews: some View {
+        MainVC()
+            .getPreview()
+    }
+}
+
+#endif

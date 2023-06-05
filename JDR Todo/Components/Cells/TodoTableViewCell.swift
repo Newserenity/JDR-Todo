@@ -16,12 +16,10 @@ final class TodoTableViewCell: UITableViewCell {
         $0.distribution = .equalCentering
     }
     
-    fileprivate lazy var titleLabel = UILabel().then {
+    lazy var titleLabel = UILabel().then {
         $0.textColor = .darkText
         $0.font = .systemFont(ofSize: 17, weight: .semibold)
         $0.textAlignment = .left
-        $0.text = "JDR RxSwift Demo"
-        
     }
     
     fileprivate lazy var dateStackView = UIStackView().then {
@@ -31,19 +29,16 @@ final class TodoTableViewCell: UITableViewCell {
         $0.spacing = 5
     }
     
-    fileprivate lazy var createdDate = UILabel().then {
+    lazy var createdDate = UILabel().then {
         $0.textColor = .systemGray2
         $0.font = .systemFont(ofSize: 10.5, weight: .medium)
         $0.textAlignment = .left
-        $0.text = "2023/06/01 12:30 MON"
-        
     }
     
-    fileprivate lazy var lastModifiedDate = UILabel().then {
+    lazy var lastModifiedDate = UILabel().then {
         $0.textColor = .systemGray2
         $0.font = .systemFont(ofSize: 10.5, weight: .medium)
         $0.textAlignment = .left
-        $0.text = "2023/07/12 19:15 FRI"
     }
     
     fileprivate lazy var bottomStackView = UIStackView().then {
@@ -59,18 +54,16 @@ final class TodoTableViewCell: UITableViewCell {
         $0.distribution = .equalCentering
     }
     
-    fileprivate lazy var statusLabel = UILabel().then {
+    lazy var statusLabel = UILabel().then {
         $0.textColor = .systemBrown
         $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textAlignment = .left
-        $0.text = "⌛️ In Progress"
     }
     
-    fileprivate lazy var idLabel = UILabel().then {
+    lazy var idLabel = UILabel().then {
         $0.textColor = .darkText
         $0.font = .systemFont(ofSize: 12, weight: .semibold)
         $0.textAlignment = .left
-        $0.text = "#8267"
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -11,8 +11,6 @@ import Then
 
 final class TodoTabelView: UIView {
     
-    var todoArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
     fileprivate lazy var tableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
@@ -50,12 +48,19 @@ extension TodoTabelView {
 //MARK: - UITableViewDataSource 관련
 extension TodoTabelView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoArr.count
+        return TodoCardModel.share.todoCards.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTableViewCell", for: indexPath) as! TodoTableViewCell
         
+        let card = TodoCardModel.share.todoCards[indexPath.row]
+        
+        cell.createdDate.text = card.createdDate
+        cell.lastModifiedDate.text = card.lastModifiedDate
+        cell.statusLabel.text = card.status
+        cell.titleLabel.text = card.title
+        cell.idLabel.text = card.index
         
         return cell
     }
