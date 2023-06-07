@@ -7,8 +7,28 @@
 
 import UIKit
 import Then
+import RxSwift
+import RxRelay
+import RxCocoa
+
+extension Reactive where Base: TodoTableViewCell {
+    var cellData: Binder<TodoCard> {
+        return Binder(base,
+                      binding: { cell, todoCard in
+            cell.createdDate.text = todoCard.createdDate
+            cell.lastModifiedDate.text = todoCard.lastModifiedDate
+            cell.statusLabel.text = todoCard.statusInfo
+            cell.statusLabel.textColor = todoCard.status ? .systemGreen : .systemBrown
+            cell.titleLabel.text = todoCard.title
+            cell.idLabel.text = todoCard.index
+        })
+    }
+}
 
 final class TodoTableViewCell: UITableViewCell {
+    
+    var ob: AnyObserver<TodoCard>
+    let disposeBag = DisposeBag()
     
     fileprivate lazy var verticalStackView = UIStackView().then {
         $0.axis = .vertical
@@ -67,9 +87,16 @@ final class TodoTableViewCell: UITableViewCell {
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        let data = PublishSubject<TodoCard>()
+        ob = data.asObserver()
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configLayout()
+        
+        data.observe(on: MainScheduler.instance)
+            .bind(to: self.rx.cellData)
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

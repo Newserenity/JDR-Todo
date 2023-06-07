@@ -31,6 +31,8 @@
 		B2964A842A286795003F3179 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A832A286795003F3179 /* RxSwift */; };
 		B2964A8D2A286986003F3179 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A8C2A286986003F3179 /* Then */; };
 		B2964A902A2869A6003F3179 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2964A8F2A2869A6003F3179 /* SnapKit */; };
+		F2BF54CA2A2F5E67000D2D23 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BF54C92A2F5E67000D2D23 /* NetworkManager.swift */; };
+		F2BF54CC2A2F6849000D2D23 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BF54CB2A2F6849000D2D23 /* Date+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		B25885832A290C4C001268A9 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		B25885852A29108C001268A9 /* TodolistData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodolistData.swift; sourceTree = "<group>"; };
 		B2964A792A28646E003F3179 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		F2BF54C92A2F5E67000D2D23 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F2BF54CB2A2F6849000D2D23 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +214,7 @@
 		B2964A882A286925003F3179 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				F2BF54C92A2F5E67000D2D23 /* NetworkManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			children = (
 				B25885762A2887D1001268A9 /* UIViewController+Ext.swift */,
 				B25885782A2887F4001268A9 /* UIView+Ext.swift */,
+				F2BF54CB2A2F6849000D2D23 /* Date+Ext.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -383,7 +389,9 @@
 				B216EAE22A227FB500A18C83 /* AppDelegate.swift in Sources */,
 				B258857B2A28AD26001268A9 /* SearchBarView.swift in Sources */,
 				B25885792A2887F4001268A9 /* UIView+Ext.swift in Sources */,
+				F2BF54CC2A2F6849000D2D23 /* Date+Ext.swift in Sources */,
 				B25885862A29108C001268A9 /* TodolistData.swift in Sources */,
+				F2BF54CA2A2F5E67000D2D23 /* NetworkManager.swift in Sources */,
 				B2964A7A2A28646E003F3179 /* SettingVC.swift in Sources */,
 				B20AFE742A2CCAC1004A646B /* MainVM.swift in Sources */,
 				B216EAE42A227FB500A18C83 /* SceneDelegate.swift in Sources */,

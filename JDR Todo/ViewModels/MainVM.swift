@@ -6,25 +6,53 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import RxRelay
 
 struct TodoCard {
     var title: String
     var index: String
     var lastModifiedDate: String
     var createdDate: String
-    var status: String
+    var status: Bool
+    var statusInfo: String {
+        return status ? "✅ Finished" : "⌛️ In Progress"
+    }
+    
+    init(_ entity: Todo) {
+        
+        self.title = entity.title ?? ""
+        self.index = "\(entity.id ?? 0)"
+        
+        let dateString = entity.updatedAt ?? ""
+        
+        let modifiedDate = Date.makeDateString(original: dateString) ?? ""
+        
+        self.lastModifiedDate = modifiedDate
+        self.createdDate = entity.createdAt ?? ""
+        self.status = entity.isDone ?? false
+    }
+    
 }
 
-final class TodoCardModel {
-    static var share = TodoCardModel()
+//
+final class TodoCardViewModel {
+    static var share = TodoCardViewModel()
     
-    var todoCards: [TodoCard] = [
-        TodoCard(title: "Rx문서보기", index: "#91634", lastModifiedDate: "2023/06/01 12:30 MON", createdDate: "2023/06/01 12:30 MON", status: "⌛️ In Progress"),
-        TodoCard(title: "수박 사오기", index: "#84512", lastModifiedDate: "2023/06/02 15:30 TUE", createdDate: "2023/06/01 12:30 MON", status: "⌛️ In Progress"),
-        TodoCard(title: "청소하기", index: "#44234", lastModifiedDate: "2023/06/01 12:30 MON", createdDate: "2023/06/01 12:30 MON", status: "⌛️ In Progress"),
-        TodoCard(title: "정대리 상담", index: "#95513", lastModifiedDate: "2023/06/01 12:30 MON", createdDate: "2023/06/01 12:30 MON", status: "⌛️ In Progress"),
-        TodoCard(title: "투두리스트 만들기", index: "#23998", lastModifiedDate: "2023/06/01 12:30 MON", createdDate: "2023/06/01 12:30 MON", status: "✅ Finished"),
-        TodoCard(title: "테스트 테스트", index: "#23998", lastModifiedDate: "2023/06/01 12:30 MON", createdDate: "2023/06/01 12:30 MON", status: "✅ Finished"),
-        TodoCard(title: "으아아악", index: "#23998", lastModifiedDate: "2023/06/01 12:30 MON", createdDate: "2023/06/01 12:30 MON", status: "✅ Finished"),
-    ]
+    var todoCards = BehaviorRelay<[TodoCard]>(value: [])
+    
+    var disposeBag = DisposeBag()
+    
+    init(){
+        print(#fileID, #function, #line, "- ")
+        
+        NetworkManager.shared
+            .fetchTodos() // Observable<[Todo]>
+            .map{ fetchedTodos in
+                return fetchedTodos.map{ TodoCard($0) }
+            } // Observable<[TodoCard]>
+            .bind(onNext: todoCards.accept(_:))
+            .disposed(by: disposeBag)
+    }
 }

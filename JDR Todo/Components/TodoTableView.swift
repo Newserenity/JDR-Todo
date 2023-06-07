@@ -8,14 +8,19 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class TodoTabelView: UIView {
+    
+    let viewModel = TodoCardViewModel()
+    let disposeBag = DisposeBag()
     
     fileprivate lazy var tableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
         $0.delegate = self
-        $0.dataSource = self
+//        $0.dataSource = self
         $0.sectionHeaderHeight = 15
     }
     
@@ -41,30 +46,36 @@ extension TodoTabelView {
     fileprivate func configProperty() {
         self.tableView.estimatedRowHeight = UITableView.automaticDimension
         self.tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: "TodoTableViewCell")
+        
+        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: "TodoTableViewCell", cellType: TodoTableViewCell.self)) { index, card, cell in
+            
+            cell.ob.onNext(card)
+        }
+        .disposed(by: disposeBag)
     }
 }
 
 
 //MARK: - UITableViewDataSource 관련
-extension TodoTabelView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TodoCardModel.share.todoCards.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTableViewCell", for: indexPath) as! TodoTableViewCell
-        
-        let card = TodoCardModel.share.todoCards[indexPath.row]
-        
-        cell.createdDate.text = card.createdDate
-        cell.lastModifiedDate.text = card.lastModifiedDate
-        cell.statusLabel.text = card.status
-        cell.titleLabel.text = card.title
-        cell.idLabel.text = card.index
-        
-        return cell
-    }
-}
+//extension TodoTabelView: UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+////        return TodoCardModel.share.todoCards.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTableViewCell", for: indexPath) as! TodoTableViewCell
+//
+////        let card = TodoCardModel.share.todoCards[indexPath.row]
+////        TodoCardModel.share.configure()
+////        cell.createdDate.text = card.createdDate
+////        cell.lastModifiedDate.text = card.lastModifiedDate
+////        cell.statusLabel.text = card.status
+////        cell.titleLabel.text = card.title
+////        cell.idLabel.text = card.index
+//
+//        return cell
+//    }
+//}
 
 // MARK: - UITableViewDelegate
 extension TodoTabelView: UITableViewDelegate {

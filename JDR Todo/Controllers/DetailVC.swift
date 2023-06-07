@@ -7,6 +7,7 @@
 
 import UIKit
 
+//DRY
 class DetailVC: UIViewController {
 
     override func viewDidLoad() {

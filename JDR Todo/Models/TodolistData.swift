@@ -7,19 +7,34 @@
 
 import Foundation
 
+
+
+// MARK: - Welcome
+struct ListDataResponse<T : Codable>: Codable {
+    let data: [T]?
+    let meta: Meta?
+    let message: String?
+}
+
+// MARK: - Welcome
+struct DataResponse<T : Codable>: Codable {
+    let data: T?
+    let message: String?
+}
+
 // MARK: - Welcome
 struct TodolistData: Codable {
-    let data: [Datum]
-    let meta: Meta
-    let message: String
+    let data: [Todo]?
+    let meta: Meta?
+    let message: String?
 }
 
 // MARK: - Datum
-struct Datum: Codable {
-    let id: Int
-    let title: String
-    let isDone: Bool
-    let createdAt, updatedAt: String
+struct Todo: Codable {
+    let id: Int?
+    let title: String?
+    let isDone: Bool?
+    let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title
@@ -31,8 +46,8 @@ struct Datum: Codable {
 
 // MARK: - Meta
 struct Meta: Codable {
-    let currentPage, from, lastPage, perPage: Int
-    let to, total: Int
+    let currentPage, from, lastPage, perPage: Int?
+    let to, total: Int?
 
     enum CodingKeys: String, CodingKey {
         case currentPage = "current_page"
