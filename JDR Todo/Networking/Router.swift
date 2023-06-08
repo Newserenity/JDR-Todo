@@ -48,7 +48,8 @@ enum Router: URLRequestConvertible {
                 "per_page": String(perPage),
                 "is_done": isDone.rawValue,
             ]
-        default: return nil
+            
+//        default: return nil
         }
     }
     

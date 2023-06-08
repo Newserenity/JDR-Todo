@@ -45,9 +45,9 @@ extension TodoTabelView {
     // self stored property
     fileprivate func configProperty() {
         self.tableView.estimatedRowHeight = UITableView.automaticDimension
-        self.tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: "TodoTableViewCell")
+        self.tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: IDENTIFIER.TODO_TABLEVIEW_CELL)
         
-        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: "TodoTableViewCell", cellType: TodoTableViewCell.self)) { index, card, cell in
+        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TABLEVIEW_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
             
             cell.ob.onNext(card)
         }

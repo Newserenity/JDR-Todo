@@ -49,10 +49,12 @@ final class TodoCardViewModel {
         
         NetworkManager.shared
             .fetchTodos() // Observable<[Todo]>
+//            .getTodosRX()
             .map{ fetchedTodos in
                 return fetchedTodos.map{ TodoCard($0) }
             } // Observable<[TodoCard]>
             .bind(onNext: todoCards.accept(_:))
             .disposed(by: disposeBag)
+        
     }
 }

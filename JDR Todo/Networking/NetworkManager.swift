@@ -9,8 +9,15 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import RxAlamofire
+import Alamofire
 
 final class NetworkManager {
+    
+    enum NetworkError: Error {
+        case invalidResponse
+        case requestFailed
+    }
     
     static let shared = NetworkManager()
     
@@ -37,6 +44,33 @@ final class NetworkManager {
         // swift -> json : en code
     }
     
+//    func getTodosRX() -> Observable<[Todo]> {
+//        let interceptor = CustomInterceptor()
+//        let session = Session(interceptor: interceptor)
+//
+//        let request = try! Router.getTodos(page: 1,
+//                                           filter: "created_at",
+//                                           orderBy: .descending,
+//                                           isDone: .both,
+//                                           perPage: 20)
+//            .asURLRequest()
+//
+//        return RxAlamofire
+//            .request(request, interceptor: interceptor)
+//            .data()
+        
+//            .request(.get, request, interceptor: interceptor, )
+//            .validate(statusCode: 200..<300)
+//            .data()
+//            .flatMap { data -> Observable<[Todo]> in
+//                guard let todos = try? JSONDecoder().decode([Todo].self, from: data) else {
+//                    return Observable.error(NetworkError.invalidResponse)
+//                }
+//                return Observable.just(todos)
+//            }
+//    }
+    
+    
 //    func fetchTodos() -> Observable<[Todo]>{
 //        // Interceptor + URLHTTPResponse + Validation + JSON
 //        let adapter = // Some RequestAdapter
@@ -52,37 +86,37 @@ final class NetworkManager {
 //    }
     
     // Example usage
-    func getUsers() -> Observable<[User]> {
-        let interceptor = CustomInterceptor()
-        let session = Session(interceptor: interceptor)
-        
-        return RxAlamofire
-            .request(.get, try Router.getUsers.asURLRequest(), interceptor: interceptor, session: session)
-            .validate(statusCode: 200..<300)
-            .data()
-            .flatMap { data -> Observable<[User]> in
-                guard let users = try? JSONDecoder().decode([User].self, from: data) else {
-                    return Observable.error(NetworkError.invalidResponse)
-                }
-                return Observable.just(users)
-            }
-    }
-
-    func getUser(id: Int) -> Observable<User> {
-        let interceptor = CustomInterceptor()
-        let session = Session(interceptor: interceptor)
-        
-        return RxAlamofire
-            .request(.get, try Router.getUser(id: id).asURLRequest(), interceptor: interceptor, session: session)
-            .validate(statusCode: 200..<300)
-            .data()
-            .flatMap { data -> Observable<User> in
-                guard let user = try? JSONDecoder().decode(User.self, from: data) else {
-                    return Observable.error(NetworkError.invalidResponse)
-                }
-                return Observable.just(user)
-            }
-    }
+//    func getUsers() -> Observable<[User]> {
+//        let interceptor = CustomInterceptor()
+//        let session = Session(interceptor: interceptor)
+//        
+//        return RxAlamofire
+//            .request(.get, try Router.getUsers.asURLRequest(), interceptor: interceptor, session: session)
+//            .validate(statusCode: 200..<300)
+//            .data()
+//            .flatMap { data -> Observable<[User]> in
+//                guard let users = try? JSONDecoder().decode([User].self, from: data) else {
+//                    return Observable.error(NetworkError.invalidResponse)
+//                }
+//                return Observable.just(users)
+//            }
+//    }
+//
+//    func getUser(id: Int) -> Observable<User> {
+//        let interceptor = CustomInterceptor()
+//        let session = Session(interceptor: interceptor)
+//        
+//        return RxAlamofire
+//            .request(.get, try Router.getUser(id: id).asURLRequest(), interceptor: interceptor, session: session)
+//            .validate(statusCode: 200..<300)
+//            .data()
+//            .flatMap { data -> Observable<User> in
+//                guard let user = try? JSONDecoder().decode(User.self, from: data) else {
+//                    return Observable.error(NetworkError.invalidResponse)
+//                }
+//                return Observable.just(user)
+//            }
+//    }
     
     
 }

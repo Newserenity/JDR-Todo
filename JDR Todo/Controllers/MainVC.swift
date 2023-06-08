@@ -17,13 +17,13 @@ final class MainVC: UIViewController {
 //        $0.backgroundColor = .cyan
         $0.text = "Todo List"
         $0.numberOfLines = 1
-        $0.textAlignment = .center
+        $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 27, weight: .heavy)
     }
     
     private var config = UIButton.Configuration.filled()
     fileprivate lazy var addButton = UIButton().then {
-        $0.addTarget(self, action: #selector(btnPressed), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
         $0.configuration = .filled()
         config.title = "+"
         config.baseBackgroundColor = .systemOrange
@@ -32,11 +32,30 @@ final class MainVC: UIViewController {
         $0.configuration = self.config
     }
     
+    private var config2 = UIButton.Configuration.filled()
+    fileprivate lazy var addButton2 = UIButton().then {
+        $0.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
+        $0.configuration = .filled()
+        config2.title = "⚞"
+        config2.baseBackgroundColor = .systemOrange
+        config2.cornerStyle = .capsule
+        config2.titlePadding = 10
+        $0.configuration = self.config2
+    }
+    
     fileprivate lazy var topBarStackView: UIStackView = UIStackView().then {
         $0.distribution = .fill
         $0.alignment = .fill
         $0.axis = .horizontal
 //        $0.backgroundColor = .systemYellow
+    }
+    
+    fileprivate lazy var btnStackView: UIStackView = UIStackView().then {
+        $0.distribution = .fill
+        $0.alignment = .center
+        $0.axis = .horizontal
+//        $0.backgroundColor = .systemYellow
+        $0.spacing = 10
     }
     
 
@@ -61,8 +80,15 @@ final class MainVC: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    @objc private func btnPressed() {
+    @objc private func addButtonPressed() {
         present(UploadVC(), animated: true, completion: nil)
+    }
+    
+    @objc private func filterButtonPressed() {
+        SearchFilterVC.shared.modalPresentationStyle = .overFullScreen
+        present(SearchFilterVC.shared, animated: true, completion: nil)
+        
+//        SearchFilterVC.shared.presentAsModal()
     }
 }
 
@@ -78,25 +104,28 @@ extension MainVC {
 extension MainVC {
     fileprivate func configLayout() {
         self.view.addSubview(topBarStackView)
-        topBarStackView.addSubview(titleLabel)
-        topBarStackView.addSubview(addButton)
+        topBarStackView.addArrangedSubview(titleLabel)
+        topBarStackView.addArrangedSubview(btnStackView)
+        btnStackView.addArrangedSubview(addButton)
+        btnStackView.addArrangedSubview(addButton2)
         self.view.addSubview(searchBar)
         self.view.addSubview(todoTabelView)
 
         topBarStackView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(5)
-            $0.horizontalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(15)
             $0.height.equalTo(50)
         }
 
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(15)
+//            $0.leading.equalToSuperview().inset(15)
         }
-
-        addButton.snp.makeConstraints {
+            
+        btnStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.right.equalToSuperview().inset(15)
+//            $0.right.equalToSuperview().inset(15)
+            $0.height.equalTo(20)
         }
         
         searchBar.snp.makeConstraints {
@@ -109,12 +138,6 @@ extension MainVC {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview().inset(15)
         }
-
-//        starListTV.snp.makeConstraints {
-//            $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
-//            $0.left.equalTo(self.view.safeAreaLayoutGuide).offset(10)
-//            $0.right.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
-//        }
     }
 }
 

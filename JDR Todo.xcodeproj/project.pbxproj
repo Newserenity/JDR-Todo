@@ -34,6 +34,7 @@
 		B2A4DA3F2A30B93600177C99 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A4DA3E2A30B93600177C99 /* Router.swift */; };
 		B2A4DA412A30B94300177C99 /* BaseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A4DA402A30B94300177C99 /* BaseInterceptor.swift */; };
 		B2A4DA432A30C86800177C99 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A4DA422A30C86800177C99 /* Constant.swift */; };
+		B2A4DA462A31D7BB00177C99 /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A4DA452A31D7BB00177C99 /* SearchFilter.swift */; };
 		F2BF54CA2A2F5E67000D2D23 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BF54C92A2F5E67000D2D23 /* NetworkManager.swift */; };
 		F2BF54CC2A2F6849000D2D23 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BF54CB2A2F6849000D2D23 /* Date+Ext.swift */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		B2A4DA3E2A30B93600177C99 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		B2A4DA402A30B94300177C99 /* BaseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInterceptor.swift; sourceTree = "<group>"; };
 		B2A4DA422A30C86800177C99 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		B2A4DA452A31D7BB00177C99 /* SearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
 		F2BF54C92A2F5E67000D2D23 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		F2BF54CB2A2F6849000D2D23 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -203,6 +205,7 @@
 				B2964A792A28646E003F3179 /* SettingVC.swift */,
 				B25885812A290BA6001268A9 /* UploadVC.swift */,
 				B25885832A290C4C001268A9 /* DetailVC.swift */,
+				B2A4DA442A31D7A500177C99 /* Modal */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -243,6 +246,14 @@
 				B2A4DA422A30C86800177C99 /* Constant.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		B2A4DA442A31D7A500177C99 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				B2A4DA452A31D7BB00177C99 /* SearchFilter.swift */,
+			);
+			path = Modal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B25885802A28FA0F001268A9 /* TodoTableView.swift in Sources */,
+				B2A4DA462A31D7BB00177C99 /* SearchFilter.swift in Sources */,
 				B2A4DA412A30B94300177C99 /* BaseInterceptor.swift in Sources */,
 				B216EAE62A227FB500A18C83 /* MainVC.swift in Sources */,
 				B25885772A2887D1001268A9 /* UIViewController+Ext.swift in Sources */,
