@@ -32,14 +32,19 @@ final class NetworkManager {
     
     static let shared = NetworkManager()
     
-    func getTodosRX() -> Observable<[TodoCard]> {
+    func getTodosRX(page: Int = 1,
+                    orderByDate: OrderByDate = .created,
+                    orderByIndex: OrderByIndex = .descending,
+                    isDone: Status = .both,
+                    perPage:Int = 20) -> Observable<[TodoCard]> {
         let interceptor = BaseInterceptor()
 
-        let router = Router.getTodos(page: 1,
-                                           filter: "created_at",
-                                           orderBy: .descending,
-                                           isDone: .both,
-                                           perPage: 20)
+        let router = Router.getTodos(page: page,
+                                     orderByDate: orderByDate,
+                                     orderByIndex: orderByIndex,
+                                     isDone: isDone,
+                                     perPage: perPage)
+        
         return RxAlamofire
             .request(router, interceptor: interceptor)
             .validate(statusCode: 200..<300)

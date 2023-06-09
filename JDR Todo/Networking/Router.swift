@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-enum OrderBy: String {
+enum OrderByIndex: String {
     case ascending = "asc"
     case descending = "desc"
 }
@@ -19,8 +19,17 @@ enum Status: String {
     case finished = "true"
 }
 
+enum OrderByDate: String {
+    case created = "created_at"
+    case updated = "updated_at"
+}
+
 enum Router: URLRequestConvertible {
-    case getTodos(page: Int, filter: String, orderBy: OrderBy = .descending, isDone: Status = .both, perPage: Int)
+    case getTodos(page: Int,
+                  orderByDate: OrderByDate = .created,
+                  orderByIndex: OrderByIndex = .descending,
+                  isDone: Status = .both,
+                  perPage: Int)
     
     var baseURL: URL {
         return URL(string: API.BASE_URL)!
@@ -40,11 +49,11 @@ enum Router: URLRequestConvertible {
     
     var parameters: [String:String]? {
         switch self {
-        case let .getTodos(page, filter, orderBy, isDone, perPage):
+        case let .getTodos(page, orderByDate, orderByIndex, isDone, perPage):
             return [
                 "page": String(page),
-                "filter": filter,
-                "order_by": orderBy.rawValue,
+                "filter": orderByDate.rawValue,
+                "order_by": orderByIndex.rawValue,
                 "per_page": String(perPage),
                 "is_done": isDone.rawValue,
             ]
