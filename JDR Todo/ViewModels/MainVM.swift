@@ -42,19 +42,32 @@ final class TodoCardViewModel {
     
     var todoCards = BehaviorRelay<[TodoCard]>(value: [])
     
+    var errEvent = PublishRelay<Error>()
+    
     var disposeBag = DisposeBag()
     
     init(){
-        print(#fileID, #function, #line, "- ")
+//        NetworkManager.shared
+//            .fetchTodos() // Observable<[Todo]>
+////            .getTodosRX()
+//            .map{ fetchedTodos in
+//                return fetchedTodos.map{ TodoCard($0) }
+//            } // Observable<[TodoCard]>
+//            .bind(onNext: todoCards.accept(_:))
+//            .disposed(by: disposeBag)
+        
         
         NetworkManager.shared
-            .fetchTodos() // Observable<[Todo]>
-//            .getTodosRX()
-            .map{ fetchedTodos in
-                return fetchedTodos.map{ TodoCard($0) }
-            } // Observable<[TodoCard]>
-            .bind(onNext: todoCards.accept(_:))
+            .getTodosRX()
+            .debug("⭐️ getTodosRX")
+            .subscribe(onNext: todoCards.accept(_:),
+                       onError: errEvent.accept(_:))
             .disposed(by: disposeBag)
         
+        print(#fileID, #function, #line, "- ")
+        
     }
+    
+    
+    
 }

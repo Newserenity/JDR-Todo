@@ -8,10 +8,16 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxRelay
+import RxCocoa
 
 final class MainVC: UIViewController {
+    
     fileprivate let searchBar = SearchBarView()
     fileprivate let todoTabelView = TodoTabelView()
+    
+    var disposeBag : DisposeBag = DisposeBag()
     
     fileprivate lazy var titleLabel = UILabel().then {
 //        $0.backgroundColor = .cyan
@@ -21,26 +27,26 @@ final class MainVC: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 27, weight: .heavy)
     }
     
-    private var config = UIButton.Configuration.filled()
+    private var addButtonConfig = UIButton.Configuration.filled()
     fileprivate lazy var addButton = UIButton().then {
         $0.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
         $0.configuration = .filled()
-        config.title = "+"
-        config.baseBackgroundColor = .systemOrange
-        config.cornerStyle = .capsule
-        config.titlePadding = 10
-        $0.configuration = self.config
+        addButtonConfig.title = "+"
+        addButtonConfig.baseBackgroundColor = .systemOrange
+        addButtonConfig.cornerStyle = .capsule
+        addButtonConfig.titlePadding = 10
+        $0.configuration = self.addButtonConfig
     }
     
-    private var config2 = UIButton.Configuration.filled()
-    fileprivate lazy var addButton2 = UIButton().then {
+    private var filterButtonConfig = UIButton.Configuration.filled()
+    fileprivate lazy var filterButton = UIButton().then {
         $0.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
         $0.configuration = .filled()
-        config2.title = "⚞"
-        config2.baseBackgroundColor = .systemOrange
-        config2.cornerStyle = .capsule
-        config2.titlePadding = 10
-        $0.configuration = self.config2
+        filterButtonConfig.title = "⚞"
+        filterButtonConfig.baseBackgroundColor = .systemOrange
+        filterButtonConfig.cornerStyle = .capsule
+        filterButtonConfig.titlePadding = 10
+        $0.configuration = self.filterButtonConfig
     }
     
     fileprivate lazy var topBarStackView: UIStackView = UIStackView().then {
@@ -57,7 +63,8 @@ final class MainVC: UIViewController {
 //        $0.backgroundColor = .systemYellow
         $0.spacing = 10
     }
-    
+
+    var todoCardVM: TodoCardViewModel = TodoCardViewModel()
 
     // lifecycle
     override func viewDidLoad() {
@@ -66,7 +73,34 @@ final class MainVC: UIViewController {
         configProperty()
         configLayout()
         configNavbar()
+        
+        bindViewModel()
     }
+    
+    private func bindViewModel(){
+        todoCardVM
+            .errEvent
+            .bind(onNext: handleError(_:))
+            .disposed(by: disposeBag)
+    }
+    
+    private func handleError(_ err: Error) {
+        
+        if let networkErr : NetworkManager.NetworkError = err as? NetworkManager.NetworkError {
+            switch networkErr {
+            case .invalidResponse:
+                print(#fileID, #function, #line, "- invalidResponse")
+            case .requestFailed:
+                print(#fileID, #function, #line, "- requestFailed")
+            case .unknown(let err):
+                print(#fileID, #function, #line, "- err")
+            }
+            Utils.shared.presentErrorAlert(parentVC: self, networkErr: networkErr)
+        }
+        
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -107,7 +141,7 @@ extension MainVC {
         topBarStackView.addArrangedSubview(titleLabel)
         topBarStackView.addArrangedSubview(btnStackView)
         btnStackView.addArrangedSubview(addButton)
-        btnStackView.addArrangedSubview(addButton2)
+        btnStackView.addArrangedSubview(filterButton)
         self.view.addSubview(searchBar)
         self.view.addSubview(todoTabelView)
 

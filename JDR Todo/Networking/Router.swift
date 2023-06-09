@@ -60,7 +60,15 @@ enum Router: URLRequestConvertible {
         
         // Set parameters to the request if needed
         if let parameters = parameters {
-            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            switch method {
+            case .get:
+                request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            case .post:
+                request = try JSONParameterEncoder().encode(parameters, into: request)
+            // Add cases for other HTTP methods if necessary
+            default:
+                break
+            }
         }
         
         return request

@@ -17,6 +17,17 @@ final class NetworkManager {
     enum NetworkError: Error {
         case invalidResponse
         case requestFailed
+        case unknown(err: Error?)
+        
+        // 에러 정보
+        var errorInfo: String {
+            switch self {
+            case .invalidResponse:  return "유효하지 않는 응답입니다"
+            case .requestFailed:    return "요청 실패입니다"
+            case .unknown(let err as NSError): return "알 수 없는 에러입니다 : \(err.code)"
+            default: return ""
+            }
+        }
     }
     
     static let shared = NetworkManager()
@@ -44,29 +55,62 @@ final class NetworkManager {
         // swift -> json : en code
     }
     
-//    func getTodosRX() -> Observable<[Todo]> {
+    
+    
+    func getTodosRX() -> Observable<[TodoCard]> {
+        let interceptor = BaseInterceptor()
+        let session = Session(interceptor: interceptor)
+
+        let router = Router.getTodos(page: 1,
+                                           filter: "created_at",
+                                           orderBy: .descending,
+                                           isDone: .both,
+                                           perPage: 20)
+        return RxAlamofire
+            .request(router, interceptor: interceptor)
+            .validate(statusCode: 200..<300)
+            .data() // Observable<Data>
+            .decode(type: [Todo].self, decoder: JSONDecoder()) //
+//            .decode(type: ListDataResponse<Todo>.self, decoder: JSONDecoder()) // Observable<ListDataResponse<Todo>>
+//            .compactMap{ $0.data } // Observable<[Todo]>
+            .map{ todos in
+                return todos.map{ TodoCard($0) }
+            }
+            .catch { err in
+                if err is DecodingError {
+                    print(#fileID, #function, #line, "- ")
+                    throw NetworkError.invalidResponse
+                }
+                print(#fileID, #function, #line, "- ")
+                throw NetworkError.unknown(err: err)
+            }
+//            .catchAndReturn([])
+    }
+    
+//    
+//    
+//    func getTodosRX() -> Observable<[TodoCard]> {
 //        let interceptor = CustomInterceptor()
 //        let session = Session(interceptor: interceptor)
 //
-//        let request = try! Router.getTodos(page: 1,
+//        let router = Router.getTodos(page: 1,
 //                                           filter: "created_at",
 //                                           orderBy: .descending,
 //                                           isDone: .both,
 //                                           perPage: 20)
-//            .asURLRequest()
-//
 //        return RxAlamofire
-//            .request(request, interceptor: interceptor)
-//            .data()
-        
-//            .request(.get, request, interceptor: interceptor, )
+//            .request(router, interceptor: interceptor)
 //            .validate(statusCode: 200..<300)
-//            .data()
-//            .flatMap { data -> Observable<[Todo]> in
-//                guard let todos = try? JSONDecoder().decode([Todo].self, from: data) else {
-//                    return Observable.error(NetworkError.invalidResponse)
+//            .data() // Observable<Data>
+//            .decode(type: [Todo].self, decoder: JSONDecoder()) // Observable<[Todo]>
+//            .map{ todos in
+//                return todos.map{ TodoCard($0) }
+//            }
+//            .catch { err in
+//                if err is DecodingError {
+//                    throw NetworkError.invalidResponse
 //                }
-//                return Observable.just(todos)
+//                throw NetworkError.unknown(err: err)
 //            }
 //    }
     

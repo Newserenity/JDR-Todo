@@ -31,7 +31,7 @@ final class SearchFilterVC: UIViewController {
         $0.text = "Order By"
         $0.numberOfLines = 1
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 18, weight: .bold)
     }
     
     private var descendingButtonConfig = UIButton.Configuration.filled()
@@ -40,28 +40,43 @@ final class SearchFilterVC: UIViewController {
         $0.configuration = .filled()
         descendingButtonConfig.title = "desc"
         descendingButtonConfig.baseBackgroundColor = .systemOrange
-        descendingButtonConfig.cornerStyle = .dynamic
+        descendingButtonConfig.cornerStyle = .capsule
         descendingButtonConfig.titlePadding = 10
         $0.configuration = self.descendingButtonConfig
     }
     
     private var ascendingButtonConfig = UIButton.Configuration.filled()
+    
     fileprivate lazy var ascendingButton = UIButton().then {
         $0.addTarget(self, action: #selector(ascendingButtonPressed), for: .touchUpInside)
         $0.configuration = .filled()
         ascendingButtonConfig.title = "asc"
         ascendingButtonConfig.baseBackgroundColor = .systemGray4
-        ascendingButtonConfig.cornerStyle = .dynamic
+        ascendingButtonConfig.cornerStyle = .capsule
         ascendingButtonConfig.titlePadding = 10
         $0.configuration = self.ascendingButtonConfig
     }
+    
     fileprivate lazy var btnStackView: UIStackView = UIStackView().then {
         $0.distribution = .fill
-        $0.alignment = .center
+        $0.alignment = .fill
         $0.axis = .horizontal
 //        $0.backgroundColor = .systemYellow
         $0.spacing = 10
     }
+    
+    private var okButtonConfig = UIButton.Configuration.filled()
+    
+    fileprivate lazy var okButton = UIButton().then {
+        $0.addTarget(self, action: #selector(okButtonPressed), for: .touchUpInside)
+        $0.configuration = .filled()
+        okButtonConfig.title = "OK"
+        okButtonConfig.baseBackgroundColor = .black
+        okButtonConfig.cornerStyle = .capsule
+        okButtonConfig.titlePadding = 10
+        $0.configuration = self.okButtonConfig
+    }
+    
     
     // lifecycle
     override func viewDidLoad() {
@@ -86,7 +101,7 @@ final class SearchFilterVC: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.5) {
             self.dimView.backgroundColor = .black
             self.dimView.alpha = 0.25
         }
@@ -97,7 +112,7 @@ final class SearchFilterVC: UIViewController {
         // navbar hide setting
         navigationController?.setNavigationBarHidden(false, animated: animated)
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.5) {
             self.dimView.alpha = 0
         } completion: { _ in
             self.dimView.removeFromSuperview()
@@ -130,24 +145,7 @@ final class SearchFilterVC: UIViewController {
         descendingButton.configuration = descendingButtonConfig
     }
     
-    // Presenting the view controller
-      func presentAsModal() {
-          let searchFilterVC = SearchFilterVC()
-          searchFilterVC.modalPresentationStyle = .custom
-//          searchFilterVC.transitioningDelegate = self
-          present(searchFilterVC, animated: true, completion: nil)
-      }
-      
-      // Custom transition animation
-//      func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//          return SearchFilterTransitionAnimator(isPresenting: true)
-//      }
-//
-//      func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//          return SearchFilterTransitionAnimator(isPresenting: false)
-//      }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc func okButtonPressed() {
         self.dismiss(animated: true)
     }
 }
@@ -169,10 +167,11 @@ extension SearchFilterVC {
         popUpView.addSubview(titleLabel)
         popUpView.addSubview(orderByLabel)
         
-        btnStackView.addArrangedSubview(ascendingButton)
         btnStackView.addArrangedSubview(descendingButton)
+        btnStackView.addArrangedSubview(ascendingButton)
         
         popUpView.addSubview(btnStackView)
+        popUpView.addSubview(okButton)
         
         popUpView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
@@ -190,65 +189,19 @@ extension SearchFilterVC {
         }
         
         btnStackView.snp.makeConstraints {
-            $0.top.equalTo(orderByLabel.snp.bottom)
+            $0.top.equalTo(orderByLabel.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(10)
-            $0.height.equalTo(60)
+            $0.height.equalTo(40)
+        }
+            okButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.left.equalToSuperview().offset(15)
+            $0.height.equalTo(50)
         }
     }
 }
-
-
-class SearchFilterTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    
-    private let isPresenting: Bool
-    
-    init(isPresenting: Bool) {
-        self.isPresenting = isPresenting
-    }
-    
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
-    }
-    
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromViewController = transitionContext.viewController(forKey: .from),
-              let toViewController = transitionContext.viewController(forKey: .to) else {
-            return
-        }
-        
-        let containerView = transitionContext.containerView
-        
-        if isPresenting {
-            containerView.addSubview(toViewController.view)
-            
-            // Set initial frame for the presented view
-            let initialFrame = CGRect(x: 0, y: containerView.bounds.height, width: containerView.bounds.width, height: 300)
-            toViewController.view.frame = initialFrame
-            
-            // Animate the presented view to its final frame
-            UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-                toViewController.view.frame = containerView.bounds
-            }, completion: { finished in
-                transitionContext.completeTransition(finished)
-            })
-        } else {
-            // Animate the dismissal of the view controller
-            UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-                fromViewController.view.frame = CGRect(x: 0, y: containerView.bounds.height, width: containerView.bounds.width, height: 300)
-            }, completion: { finished in
-                transitionContext.completeTransition(finished)
-            })
-        }
-    }
-    
-}
-
-
-
-
-
-
 
 // MARK: - Preview 관련
 #if DEBUG

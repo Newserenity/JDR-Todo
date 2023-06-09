@@ -11,7 +11,7 @@ import RxSwift
 import RxAlamofire
 
 // Custom Interceptor
-class CustomInterceptor: RequestInterceptor {
+class BaseInterceptor: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         // Perform any modifications to the request before sending it
         var modifiedRequest = urlRequest
@@ -25,6 +25,15 @@ class CustomInterceptor: RequestInterceptor {
         // Handle request retry logic
         // ...
         completion(.doNotRetry)
+    }
+    
+    func didReceive(_ result: Result<Data, AFError>, for request: URLRequest, response: HTTPURLResponse, completion: @escaping (AFResult<Data>) -> Void) {
+        switch result {
+        case .success(let data):
+            completion(.success(data))
+        case .failure(let error):
+            completion(.failure(error))
+        }
     }
 }
 
