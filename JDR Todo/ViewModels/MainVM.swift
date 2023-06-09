@@ -24,16 +24,10 @@ struct TodoCard {
         
         self.title = entity.title ?? ""
         self.index = "\(entity.id ?? 0)"
-        
-        let dateString = entity.updatedAt ?? ""
-        
-        let modifiedDate = Date.makeDateString(original: dateString) ?? ""
-        
-        self.lastModifiedDate = modifiedDate
-        self.createdDate = entity.createdAt ?? ""
+        self.lastModifiedDate =  Date.makeDateString(original: entity.updatedAt ?? "") ?? ""
+        self.createdDate =  Date.makeDateString(original: entity.createdAt ?? "") ?? ""
         self.status = entity.isDone ?? false
     }
-    
 }
 
 //
@@ -47,27 +41,11 @@ final class TodoCardViewModel {
     var disposeBag = DisposeBag()
     
     init(){
-//        NetworkManager.shared
-//            .fetchTodos() // Observable<[Todo]>
-////            .getTodosRX()
-//            .map{ fetchedTodos in
-//                return fetchedTodos.map{ TodoCard($0) }
-//            } // Observable<[TodoCard]>
-//            .bind(onNext: todoCards.accept(_:))
-//            .disposed(by: disposeBag)
-        
         
         NetworkManager.shared
             .getTodosRX()
-            .debug("⭐️ getTodosRX")
             .subscribe(onNext: todoCards.accept(_:),
                        onError: errEvent.accept(_:))
             .disposed(by: disposeBag)
-        
-        print(#fileID, #function, #line, "- ")
-        
     }
-    
-    
-    
 }

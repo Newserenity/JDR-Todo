@@ -86,14 +86,14 @@ final class MainVC: UIViewController {
     
     private func handleError(_ err: Error) {
         
-        if let networkErr : NetworkManager.NetworkError = err as? NetworkManager.NetworkError {
+        if let networkErr : NetworkError = err as? NetworkError {
             switch networkErr {
             case .invalidResponse:
                 print(#fileID, #function, #line, "- invalidResponse")
             case .requestFailed:
                 print(#fileID, #function, #line, "- requestFailed")
             case .unknown(let err):
-                print(#fileID, #function, #line, "- err")
+                print(#fileID, #function, #line, "- err \(String(describing: err))")
             }
             Utils.shared.presentErrorAlert(parentVC: self, networkErr: networkErr)
         }

@@ -9,27 +9,27 @@ import Foundation
 
 
 
-// MARK: - Welcome
+// MARK: - ListDataResponse 제네릭
 struct ListDataResponse<T : Codable>: Codable {
     let data: [T]?
     let meta: Meta?
     let message: String?
 }
 
-// MARK: - Welcome
+// MARK: - DataResponse
 struct DataResponse<T : Codable>: Codable {
     let data: T?
     let message: String?
 }
 
-// MARK: - Welcome
+// MARK: - TodolistData
 struct TodolistData: Codable {
     let data: [Todo]?
     let meta: Meta?
     let message: String?
 }
 
-// MARK: - Datum
+// MARK: - Todo
 struct Todo: Codable {
     let id: Int?
     let title: String?
