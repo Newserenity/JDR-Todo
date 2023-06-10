@@ -83,14 +83,6 @@ extension TodoTabelView: UITableViewDelegate {
         return 110 // 셀 높이 값
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//            return 15  // 원하는 간격 높이 값으로 변경
-//    }
-//
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return intervalView
-//    }
-    
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
@@ -98,7 +90,11 @@ extension TodoTabelView: UITableViewDelegate {
             completionHandler(true)
         }
         
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        let changeStatusAction = UIContextualAction(style: .normal, title: "Flip Status") { (action, view, completionHandler) in
+            completionHandler(true)
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, changeStatusAction])
         return configuration
     }
     
@@ -124,9 +120,6 @@ extension TodoTabelView {
             $0.edges.equalToSuperview()
         }
         
-//        intervalView.snp.makeConstraints {
-//            $0.size.equalTo(15)
-//        }
     }
 }
 

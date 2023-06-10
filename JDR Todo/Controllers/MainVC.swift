@@ -97,7 +97,6 @@ final class MainVC: UIViewController {
             }
             Utils.shared.presentErrorAlert(parentVC: self, networkErr: networkErr)
         }
-        
     }
     
     
@@ -121,8 +120,6 @@ final class MainVC: UIViewController {
     @objc private func filterButtonPressed() {
         SearchFilterVC.shared.modalPresentationStyle = .overFullScreen
         present(SearchFilterVC.shared, animated: true, completion: nil)
-        
-//        SearchFilterVC.shared.presentAsModal()
     }
 }
 

@@ -12,9 +12,13 @@ final class SearchFilterVC: UIViewController {
     
     static var shared = SearchFilterVC()
     
-    private var dimView = UIView().then {
-        $0.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
-    }
+//    private var dimView = UIView().then {
+//        $0.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
+//    }
+    
+    private var dimView = UIVisualEffectView().then {
+        $0.effect = UIBlurEffect(style: .systemUltraThinMaterialDark)
+      }
     
     private var popUpView = UIView().then {
         $0.backgroundColor = .white
@@ -101,9 +105,8 @@ final class SearchFilterVC: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-        UIView.animate(withDuration: 0.5) {
-            self.dimView.backgroundColor = .black
-            self.dimView.alpha = 0.25
+        UIView.animate(withDuration: 0.3) {
+            self.dimView.alpha = 1
         }
     }
 
@@ -112,7 +115,7 @@ final class SearchFilterVC: UIViewController {
         // navbar hide setting
         navigationController?.setNavigationBarHidden(false, animated: animated)
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.3) {
             self.dimView.alpha = 0
         } completion: { _ in
             self.dimView.removeFromSuperview()

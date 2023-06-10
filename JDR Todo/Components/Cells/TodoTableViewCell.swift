@@ -144,9 +144,6 @@ extension TodoTableViewCell {
         dateStackView.addArrangedSubview(createdDate)
         dateStackView.addArrangedSubview(lastModifiedDate)
         
-//        self.contentView.snp.makeConstraints {
-//            $0.edges.equalToSuperview().inset(12)
-//        }
         
         verticalStackView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(12)
