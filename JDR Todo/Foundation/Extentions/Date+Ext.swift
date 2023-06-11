@@ -7,8 +7,19 @@
 
 import Foundation
 
+/**
+ - Description: 날짜 변환 확장
+ */
 extension Date {
     
+    //MARK: - Custom Method
+    /**
+     - Description: makeDateString 1번째 파람에서 넘겨받을 값을 특정한 형식으로 돌려주는 메소드
+     - Warning: originalDateString은 무조건 "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'" 형식이어야 합니다
+     ```
+     Date.makeDateString(original: "***")
+     ```
+     */
     static func makeDateString(original originalDateString: String,
                         format: String = "yyyy/MM/dd hh:mm EE") -> String? {
         

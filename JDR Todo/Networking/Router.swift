@@ -8,23 +8,12 @@
 import Foundation
 import Alamofire
 
-enum OrderByIndex: String {
-    case ascending = "asc"
-    case descending = "desc"
-}
-
-enum Status: String {
-    case both = ""
-    case inProgress = "false"
-    case finished = "true"
-}
-
-enum OrderByDate: String {
-    case created = "created_at"
-    case updated = "updated_at"
-}
-
+/**
+ * - Description: 라우터를 미리 enum 형식으로 만들어 놓음
+ */
 enum Router: URLRequestConvertible {
+    
+    
     case getTodos(page: Int,
                   orderByDate: OrderByDate = .created,
                   orderByIndex: OrderByIndex = .descending,
@@ -57,8 +46,6 @@ enum Router: URLRequestConvertible {
                 "per_page": String(perPage),
                 "is_done": isDone.rawValue,
             ]
-            
-//        default: return nil
         }
     }
     

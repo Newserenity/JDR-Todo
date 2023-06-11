@@ -11,16 +11,18 @@ import Then
 import RxSwift
 import RxCocoa
 
-final class TodoTabelView: UIView {
+/**
+ * ##화면 명: 투두리스트 뷰
+ */
+final class TodoTabelView: BaseView {
     
-    let viewModel = TodoCardViewModel()
+    let viewModel = MainVM()
     let disposeBag = DisposeBag()
     
     fileprivate lazy var tableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
         $0.delegate = self
-//        $0.dataSource = self
         $0.sectionHeaderHeight = 15
     }
     
@@ -28,54 +30,32 @@ final class TodoTabelView: UIView {
         $0.backgroundColor = .clear
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        configProperty()
-        configLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
+    //MARK: - View Life Cycle
+    override func bindUI() {
+        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
 
-// MARK: - Setting Self
-extension TodoTabelView {
-    // self stored property
-    fileprivate func configProperty() {
-        self.tableView.estimatedRowHeight = UITableView.automaticDimension
-        self.tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: IDENTIFIER.TODO_TABLEVIEW_CELL)
-        
-        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TABLEVIEW_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-            
-            cell.ob.onNext(card)
+            cell.configureData(card)
         }
         .disposed(by: disposeBag)
     }
+    
+    override func setProperty() {
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: IDENTIFIER.TODO_TV_CELL)
+    }
+    
+    override func setLayout() {
+        addSubview(tableView)
+    }
+    
+    override func setConstraint() {
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
 }
 
 
-//MARK: - UITableViewDataSource 관련
-//extension TodoTabelView: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-////        return TodoCardModel.share.todoCards.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTableViewCell", for: indexPath) as! TodoTableViewCell
-//
-////        let card = TodoCardModel.share.todoCards[indexPath.row]
-////        TodoCardModel.share.configure()
-////        cell.createdDate.text = card.createdDate
-////        cell.lastModifiedDate.text = card.lastModifiedDate
-////        cell.statusLabel.text = card.status
-////        cell.titleLabel.text = card.title
-////        cell.idLabel.text = card.index
-//
-//        return cell
-//    }
-//}
 
 // MARK: - UITableViewDelegate
 extension TodoTabelView: UITableViewDelegate {
@@ -101,25 +81,13 @@ extension TodoTabelView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
             
-            let detailViewController = DetailVC()
+            let detailViewController = UIViewController()
             
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 if let sceneDelegate = scene.delegate as? SceneDelegate {
                     sceneDelegate.window?.rootViewController?.present(detailViewController, animated: true, completion: nil)
                 }
             }
-    }
-
-}
-
-// MARK: - autolayout
-extension TodoTabelView {
-    fileprivate func configLayout() {
-        addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
     }
 }
 

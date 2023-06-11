@@ -12,15 +12,18 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-final class MainVC: UIViewController {
+/**
+ *##화면 명: JDR TODO 메인화면 (TODO카드뷰, 검색, TODO추가 및 삭제)
+ */
+final class MainVC: BaseVC {
     
     fileprivate let searchBar = SearchBarView()
     fileprivate let todoTabelView = TodoTabelView()
+    fileprivate var viewModel: MainVM
     
-    var disposeBag : DisposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     fileprivate lazy var titleLabel = UILabel().then {
-//        $0.backgroundColor = .cyan
         $0.text = "Todo List"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -53,54 +56,16 @@ final class MainVC: UIViewController {
         $0.distribution = .fill
         $0.alignment = .fill
         $0.axis = .horizontal
-//        $0.backgroundColor = .systemYellow
     }
     
     fileprivate lazy var btnStackView: UIStackView = UIStackView().then {
         $0.distribution = .fill
         $0.alignment = .center
         $0.axis = .horizontal
-//        $0.backgroundColor = .systemYellow
         $0.spacing = 10
     }
-
-    var todoCardVM: TodoCardViewModel = TodoCardViewModel()
-
-    // lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        configProperty()
-        configLayout()
-        configNavbar()
-        
-        bindViewModel()
-    }
     
-    private func bindViewModel(){
-        todoCardVM
-            .errEvent
-            .bind(onNext: handleError(_:))
-            .disposed(by: disposeBag)
-    }
-    
-    private func handleError(_ err: Error) {
-        
-        if let networkErr : NetworkError = err as? NetworkError {
-            switch networkErr {
-            case .invalidResponse:
-                print(#fileID, #function, #line, "- invalidResponse")
-            case .requestFailed:
-                print(#fileID, #function, #line, "- requestFailed")
-            case .unknown(let err):
-                print(#fileID, #function, #line, "- err \(String(describing: err))")
-            }
-            Utils.shared.presentErrorAlert(parentVC: self, networkErr: networkErr)
-        }
-    }
-    
-    
-    
+    //MARK: - View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // navbar hide setting
@@ -113,35 +78,32 @@ final class MainVC: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    @objc private func addButtonPressed() {
-        present(UploadVC(), animated: true, completion: nil)
+    override func bindUI() {
+        viewModel
+            .errEvent
+            .bind(onNext: handleError(_:))
+            .disposed(by: disposeBag)
     }
     
-    @objc private func filterButtonPressed() {
-        SearchFilterVC.shared.modalPresentationStyle = .overFullScreen
-        present(SearchFilterVC.shared, animated: true, completion: nil)
+    override func setProperty() {
+        view.backgroundColor = .white
     }
-}
-
-// MARK: - Setting Self
-extension MainVC {
-    // self stored property
-    fileprivate func configProperty() {
-        self.view.backgroundColor = .white
+    
+    override func setLayout() {
+        [topBarStackView, searchBar, todoTabelView].forEach {
+            view.addSubview($0)
+        }
+        
+        [titleLabel, btnStackView].forEach {
+            topBarStackView.addArrangedSubview($0)
+        }
+        
+        [addButton, filterButton].forEach {
+            btnStackView.addArrangedSubview($0)
+        }
     }
-}
-
-// MARK: - addSubview / autolayout
-extension MainVC {
-    fileprivate func configLayout() {
-        self.view.addSubview(topBarStackView)
-        topBarStackView.addArrangedSubview(titleLabel)
-        topBarStackView.addArrangedSubview(btnStackView)
-        btnStackView.addArrangedSubview(addButton)
-        btnStackView.addArrangedSubview(filterButton)
-        self.view.addSubview(searchBar)
-        self.view.addSubview(todoTabelView)
-
+    
+    override func setConstraint() {
         topBarStackView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(5)
             $0.horizontalEdges.equalToSuperview().inset(15)
@@ -150,12 +112,10 @@ extension MainVC {
 
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-//            $0.leading.equalToSuperview().inset(15)
         }
             
         btnStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-//            $0.right.equalToSuperview().inset(15)
             $0.height.equalTo(20)
         }
         
@@ -168,6 +128,46 @@ extension MainVC {
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+    }
+    
+    //MARK: - Initalize Method
+    init(vm viewModel: MainVM = MainVM()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: - Action Method
+extension MainVC {
+    @objc fileprivate func addButtonPressed() {
+        present(UploadVC(), animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func filterButtonPressed() {
+        SearchFilterVC.shared.modalPresentationStyle = .overFullScreen
+        present(SearchFilterVC.shared, animated: true, completion: nil)
+    }
+}
+
+//MARK: - Custom Method
+extension MainVC {
+    fileprivate func handleError(_ err: Error) {
+        
+        if let networkErr : NetworkError = err as? NetworkError {
+            switch networkErr {
+            case .invalidResponse:
+                print(#fileID, #function, #line, "- invalidResponse")
+            case .requestFailed:
+                print(#fileID, #function, #line, "- requestFailed")
+            case .unknown(let err):
+                print(#fileID, #function, #line, "- err \(String(describing: err))")
+            }
+            Utils.shared.presentErrorAlert(parentVC: self, networkErr: networkErr)
         }
     }
 }

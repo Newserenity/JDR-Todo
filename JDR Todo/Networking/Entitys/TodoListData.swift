@@ -8,7 +8,6 @@
 import Foundation
 
 
-
 // MARK: - ListDataResponse 제네릭
 struct ListDataResponse<T : Codable>: Codable {
     let data: [T]?

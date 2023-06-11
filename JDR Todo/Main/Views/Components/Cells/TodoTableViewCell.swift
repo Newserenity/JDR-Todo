@@ -11,24 +11,28 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-extension Reactive where Base: TodoTableViewCell {
-    var cellData: Binder<TodoCard> {
-        return Binder(base,
-                      binding: { cell, todoCard in
-            cell.createdDate.text = todoCard.createdDate
-            cell.lastModifiedDate.text = todoCard.lastModifiedDate
-            cell.statusLabel.text = todoCard.statusInfo
-            cell.statusLabel.textColor = todoCard.status ? .systemGreen : .systemBrown
-            cell.titleLabel.text = todoCard.title
-            cell.idLabel.text = todoCard.index
-        })
-    }
-}
 
-final class TodoTableViewCell: UITableViewCell {
+//extension Reactive where Base: TodoTableViewCell {
+//    var cellData: Binder<TodoCardModel> {
+//        return Binder(base,
+//                      binding: { cell, todoCard in
+//            cell.createdDate.text = todoCard.createdDate
+//            cell.lastModifiedDate.text = todoCard.lastModifiedDate
+//            cell.statusLabel.text = todoCard.statusInfo
+//            cell.statusLabel.textColor = todoCard.status ? .systemGreen : .systemBrown
+//            cell.titleLabel.text = todoCard.title
+//            cell.idLabel.text = todoCard.index
+//        })
+//    }
+//}
+
+/**
+ * ##화면 명: 단일 투두리스트 셀
+ */
+final class TodoTableViewCell: BaseTableViewCell {
     
-    var ob: AnyObserver<TodoCard>
     var disposeBag = DisposeBag()
+    var cellData : TodoCardModel? = nil
     
     fileprivate lazy var verticalStackView = UIStackView().then {
         $0.axis = .vertical
@@ -86,18 +90,9 @@ final class TodoTableViewCell: UITableViewCell {
         $0.textAlignment = .left
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        let data = PublishSubject<TodoCard>()
-        ob = data.asObserver()
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        configLayout()
-        
-        data.observe(on: MainScheduler.instance)
-            .bind(to: self.rx.cellData)
-            .disposed(by: disposeBag)
-    }
+    
+    
+    //MARK: - View Life Cycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -105,22 +100,13 @@ final class TodoTableViewCell: UITableViewCell {
         self.disposeBag = DisposeBag()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
             
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
     }
-}
-
-
-// MARK: - Autolayout 관련
-extension TodoTableViewCell {
-    fileprivate func configLayout() {
-       
+    
+    override func setProperty() {
         self.contentView.clipsToBounds = true
 
         contentView.layer.cornerRadius = 10
@@ -131,6 +117,9 @@ extension TodoTableViewCell {
 
         self.selectionStyle = .none
 
+    }
+    
+    override func setLayout() {
         self.contentView.addSubview(verticalStackView)
         verticalStackView.addArrangedSubview(topStackView)
         verticalStackView.addArrangedSubview(bottomStackView)
@@ -143,8 +132,9 @@ extension TodoTableViewCell {
 
         dateStackView.addArrangedSubview(createdDate)
         dateStackView.addArrangedSubview(lastModifiedDate)
-        
-        
+    }
+    
+    override func setConstraint() {
         verticalStackView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(12)
         }
@@ -156,20 +146,14 @@ extension TodoTableViewCell {
     }
 }
 
-
-// MARK: - Preview 관련
-#if DEBUG
-
-import SwiftUI
-
-struct TodoTableViewCell_Previews: PreviewProvider {
-    static var previews: some View {
-        TodoTableViewCell()
-            .getPreview()
-            .frame(width: 400, height: 100)
-            .previewLayout(.sizeThatFits)
-
+//MARK: - Custom Method
+extension TodoTableViewCell {
+    func configureData(_ cellData: TodoCardModel){
+        self.createdDate.text = cellData.createdDate
+        self.lastModifiedDate.text = cellData.lastModifiedDate
+        self.statusLabel.text = cellData.statusInfo
+        self.statusLabel.textColor = cellData.status ? .systemGreen : .systemBrown
+        self.titleLabel.text = cellData.title
+        self.idLabel.text = cellData.index
     }
 }
-
-#endif

@@ -9,7 +9,10 @@ import UIKit
 import SnapKit
 import Then
 
-final class SearchBarView: UIView {
+/**
+ * ##화면 명: 검색창 뷰
+ */
+final class SearchBarView: BaseView {
     
     fileprivate lazy var searchView = UIView().then {
         $0.backgroundColor = .systemGray6
@@ -21,43 +24,31 @@ final class SearchBarView: UIView {
         $0.contentMode = .scaleAspectFit
         UIImageView.appearance().tintColor = .systemGray3
     }
+    
     fileprivate lazy var searchBarTextFiled = UITextField().then {
         $0.placeholder = "Search By Title"
         $0.font = .systemFont(ofSize: 12)
         UITextField.appearance().tintColor = .black
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        configProperty()
-        configLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    // override touchesBegan (키보드 내리기)
+    //MARK: - View Life Cycle
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.searchBarTextFiled.resignFirstResponder()
     }
-}
-
-// MARK: - delegate 관련
-extension SearchBarView {
-    fileprivate func configProperty() {
+    
+    override func setProperty() {
         searchBarTextFiled.delegate = self
     }
-}
-
-// MARK: - autoLayout 관련
-extension SearchBarView {
-    fileprivate func configLayout() {
-        searchView.addSubview(searchImageView)
-        searchView.addSubview(searchBarTextFiled)
-        addSubview(searchView)
+    
+    override func setLayout() {
+        [searchImageView, searchBarTextFiled].forEach {
+            searchView.addSubview($0)
+        }
         
+        addSubview(searchView)
+    }
+    
+    override func setConstraint() {
         searchView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.height.equalTo(40)
@@ -74,7 +65,6 @@ extension SearchBarView {
             $0.top.bottom.equalToSuperview()
             $0.right.equalToSuperview()
         }
-        
     }
 }
 
@@ -86,7 +76,6 @@ extension SearchBarView: UITextFieldDelegate {
         return true
     }
 }
-
 
 // MARK: - Preview 관련
 #if DEBUG

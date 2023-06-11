@@ -7,7 +7,23 @@
 
 import UIKit
 
+/**
+ - Description: UIViewController 의 확장, NavBar숨기기와  미리보기 설정 정의
+ */
 extension UIViewController {
+    
+    //MARK: - Custom Method
+    /**
+     - Description: Navbar 를 숨기기 위한 메소드
+     ```
+     override func viewDidLoad() {
+        super.viewDidLoad()
+                
+        configNavbar()
+        ...
+     }
+     ```
+     */
     func configNavbar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -24,7 +40,6 @@ extension UIViewController {
 import SwiftUI
 
 extension UIViewController {
-    
     private struct VCRepresentable: UIViewControllerRepresentable {
         let viewController: UIViewController
         
