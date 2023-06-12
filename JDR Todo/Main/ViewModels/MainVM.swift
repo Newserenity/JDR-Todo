@@ -18,6 +18,7 @@ final class MainVM {
     
     var todoCards = BehaviorRelay<[TodoCardModel]>(value: [])
     var errEvent = PublishRelay<Error>()
+    
     var disposeBag = DisposeBag()
     
     init(){

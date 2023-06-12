@@ -8,11 +8,16 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxRelay
+import RxCocoa
 
 /**
  * ##화면 명: 검색창 뷰
  */
 final class SearchBarView: BaseView {
+    
+    let disposeBag = DisposeBag()
     
     fileprivate lazy var searchView = UIView().then {
         $0.backgroundColor = .systemGray6
@@ -38,6 +43,14 @@ final class SearchBarView: BaseView {
     
     override func setProperty() {
         searchBarTextFiled.delegate = self
+    }
+    
+    override func bindUI() {
+        searchBarTextFiled.rx.text.orEmpty // orEmpty를 사용하여 옵셔널이 아닌 String을 얻습니다.
+            .subscribe(onNext: { text in
+                print("You typed: \(text)")
+            })
+            .disposed(by: disposeBag)
     }
     
     override func setLayout() {
