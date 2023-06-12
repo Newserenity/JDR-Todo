@@ -19,7 +19,7 @@ final class TodoTabelView: BaseView {
     let viewModel = MainVM()
     let disposeBag = DisposeBag()
     
-    fileprivate lazy var tableView = UITableView().then {
+    lazy var tableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
         $0.delegate = self
@@ -32,11 +32,11 @@ final class TodoTabelView: BaseView {
     
     //MARK: - View Life Cycle
     override func bindUI() {
-        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-
-            cell.configureData(card)
-        }
-        .disposed(by: disposeBag)
+//        viewModel.todoCards.bind(to: tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+//
+//            cell.configureData(card)
+//        }
+//        .disposed(by: disposeBag)
     }
     
     override func setProperty() {

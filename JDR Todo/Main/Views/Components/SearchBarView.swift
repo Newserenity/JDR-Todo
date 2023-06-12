@@ -30,7 +30,7 @@ final class SearchBarView: BaseView {
         UIImageView.appearance().tintColor = .systemGray3
     }
     
-    fileprivate lazy var searchBarTextFiled = UITextField().then {
+    lazy var searchBarTextFiled = UITextField().then {
         $0.placeholder = "Search By Title"
         $0.font = .systemFont(ofSize: 12)
         UITextField.appearance().tintColor = .black
@@ -46,11 +46,12 @@ final class SearchBarView: BaseView {
     }
     
     override func bindUI() {
-        searchBarTextFiled.rx.text.orEmpty // orEmpty를 사용하여 옵셔널이 아닌 String을 얻습니다.
-            .subscribe(onNext: { text in
-                print("You typed: \(text)")
-            })
-            .disposed(by: disposeBag)
+        
+//        searchBarTextFiled.rx.text.orEmpty // orEmpty를 사용하여 옵셔널이 아닌 String을 얻습니다.
+//            .subscribe(onNext: { text in
+//                print("You typed: \(text)")
+//            })
+//            .disposed(by: disposeBag)
     }
     
     override func setLayout() {

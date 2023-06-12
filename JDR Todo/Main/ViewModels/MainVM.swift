@@ -18,15 +18,26 @@ final class MainVM {
     
     var todoCards = BehaviorRelay<[TodoCardModel]>(value: [])
     var errEvent = PublishRelay<Error>()
+    var textOb = BehaviorRelay<String>(value: "")
     
     var disposeBag = DisposeBag()
     
     init(){
         
-        NetworkManager.shared
-            .getTodos()
-            .subscribe(onNext: todoCards.accept(_:),
-                       onError: errEvent.accept(_:))
-            .disposed(by: disposeBag)
+        textOb.debounce(.milliseconds(300), scheduler: MainScheduler.instance).flatMap { string in
+            if (string.isEmpty) {
+                return NetworkManager.shared.getTodos()
+            }
+            else {
+                return NetworkManager.shared.todoFilter(to: string)
+            }
+        }
+        .subscribe(onNext: {
+            self.todoCards.accept($0)
+        }, onError: {
+            self.errEvent.accept($0)
+        })
+        .disposed(by: disposeBag)
+        
     }
 }

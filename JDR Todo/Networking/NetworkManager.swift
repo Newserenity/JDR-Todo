@@ -61,6 +61,31 @@ final class NetworkManager {
                 throw NetworkError.unknown(err: err)
             }
     }
+    
+    func todoFilter(to text: String) -> Observable<[TodoCardModel]> {
+        let interceptor = BaseInterceptor()
+        
+        let router = Router.getTodos(page: 1,
+                                     orderByDate: .created,
+                                     orderByIndex: .ascending,
+                                     isDone: .both,
+                                     perPage: 10)
+        
+        return RxAlamofire
+            .request(router, interceptor: interceptor)
+            .validate(statusCode: 200..<300)
+            .data() // Observable<Data>
+            .decode(type: ListDataResponse<Todo>.self, decoder: JSONDecoder())
+            .compactMap { $0.data }
+            .map{ $0.map{ _ in TodoCardModel(Todo(id: 0, title:text, isDone: false, createdAt: "", updatedAt: "")) }
+            }
+            .catch { err in
+                if err is DecodingError {
+                    throw NetworkError.invalidResponse
+                }
+                throw NetworkError.unknown(err: err)
+            }
+    }
 }
 
 

@@ -83,6 +83,20 @@ final class MainVC: BaseVC {
             .errEvent
             .bind(onNext: handleError(_:))
             .disposed(by: disposeBag)
+        
+        searchBar.searchBarTextFiled
+            .rx
+            .text
+            .orEmpty
+            .bind(to: viewModel.textOb)
+            .disposed(by: disposeBag)
+        
+        viewModel.todoCards
+            .bind(to: todoTabelView.tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+                cell.configureData(card)
+            }
+            .disposed(by: disposeBag)
+            
     }
     
     override func setProperty() {
