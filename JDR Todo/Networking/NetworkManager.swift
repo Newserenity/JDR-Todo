@@ -48,7 +48,6 @@ final class NetworkManager {
         
         return RxAlamofire
             .request(router, interceptor: interceptor)
-            .validate(statusCode: 200..<300)
             .data() // Observable<Data>
             .decode(type: ListDataResponse<Todo>.self, decoder: JSONDecoder())
             .compactMap { $0.data }
@@ -62,22 +61,29 @@ final class NetworkManager {
             }
     }
     
-    func todoFilter(to text: String) -> Observable<[TodoCardModel]> {
+    func todoFilter(query: String,
+                    orderByDate: OrderByDate = .created,
+                    orderByIndex: OrderByIndex = .descending,
+                    page: Int = 1,
+                    perPage: Int = 20,
+                    isDone: Status = .both) -> Observable<[TodoCardModel]> {
         let interceptor = BaseInterceptor()
         
-        let router = Router.getTodos(page: 1,
-                                     orderByDate: .created,
-                                     orderByIndex: .ascending,
-                                     isDone: .both,
-                                     perPage: 10)
+        let router = Router.getSearch(query: query,
+                                      orderByDate: orderByDate,
+                                      orderByIndex: orderByIndex,
+                                      page: page,
+                                      perPage: perPage,
+                                      isDone: isDone)
+        
+        
         
         return RxAlamofire
             .request(router, interceptor: interceptor)
-            .validate(statusCode: 200..<300)
             .data() // Observable<Data>
             .decode(type: ListDataResponse<Todo>.self, decoder: JSONDecoder())
             .compactMap { $0.data }
-            .map{ $0.map{ _ in TodoCardModel(Todo(id: 0, title:text, isDone: false, createdAt: "", updatedAt: "")) }
+            .map{ $0.map{ TodoCardModel($0) }
             }
             .catch { err in
                 if err is DecodingError {

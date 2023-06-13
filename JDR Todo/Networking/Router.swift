@@ -19,6 +19,12 @@ enum Router: URLRequestConvertible {
                   orderByIndex: OrderByIndex = .descending,
                   isDone: Status = .both,
                   perPage: Int)
+    case getSearch(query: String,
+                   orderByDate: OrderByDate = .created,
+                   orderByIndex: OrderByIndex = .descending,
+                   page:Int,
+                   perPage: Int,
+                   isDone: Status = .both)
     
     var baseURL: URL {
         return URL(string: API.BASE_URL)!
@@ -27,12 +33,14 @@ enum Router: URLRequestConvertible {
     var method: HTTPMethod {
         switch self {
         case .getTodos: return .get
+        case .getSearch: return .get
         }
     }
     
     var path: String {
         switch self {
         case .getTodos: return "/todos"
+        case .getSearch: return "/todos/search"
         }
     }
     
@@ -43,6 +51,15 @@ enum Router: URLRequestConvertible {
                 "page": String(page),
                 "filter": orderByDate.rawValue,
                 "order_by": orderByIndex.rawValue,
+                "per_page": String(perPage),
+                "is_done": isDone.rawValue,
+            ]
+        case let .getSearch(query, orderByDate, orderByIndex, page, perPage, isDone):
+            return [
+                "query": query,
+                "filter": orderByDate.rawValue,
+                "order_by": orderByIndex.rawValue,
+                "page": String(page),
                 "per_page": String(perPage),
                 "is_done": isDone.rawValue,
             ]

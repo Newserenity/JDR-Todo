@@ -24,20 +24,20 @@ final class MainVM {
     
     init(){
         
-        textOb.debounce(.milliseconds(300), scheduler: MainScheduler.instance).flatMap { string in
-            if (string.isEmpty) {
-                return NetworkManager.shared.getTodos()
+        textOb
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .flatMapLatest { text in
+                if text.isEmpty {
+                    return NetworkManager.shared.getTodos()
+                } else {
+                    return NetworkManager.shared.todoFilter(query: text)
+                }
             }
-            else {
-                return NetworkManager.shared.todoFilter(to: string)
+            .catch { error in
+                self.errEvent.accept(error)
+                return Observable.just([])
             }
-        }
-        .subscribe(onNext: {
-            self.todoCards.accept($0)
-        }, onError: {
-            self.errEvent.accept($0)
-        })
-        .disposed(by: disposeBag)
-        
+            .bind(to: todoCards)
+            .disposed(by: disposeBag)
     }
 }

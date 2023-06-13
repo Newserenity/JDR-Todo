@@ -92,8 +92,10 @@ final class MainVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel.todoCards
-            .bind(to: todoTabelView.tableView.rx.items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-                cell.configureData(card)
+            .bind(to: todoTabelView.tableView
+                        .rx
+                        .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+                            cell.configureData(card)
             }
             .disposed(by: disposeBag)
             
