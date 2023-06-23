@@ -65,6 +65,8 @@ final class MainVC: BaseVC {
         $0.spacing = 10
     }
     
+    var errorOccured : Bool = false
+    
     //MARK: - View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -79,26 +81,33 @@ final class MainVC: BaseVC {
     }
     
     override func bindUI() {
-        viewModel
-            .errEvent
-            .bind(onNext: handleError(_:))
-            .disposed(by: disposeBag)
         
         searchBar.searchBarTextFiled
             .rx
             .text
             .orEmpty
+            .debug("⭐️ searchBarTextFiled 1")
+            .distinctUntilChanged()
+            .do(onNext: { _ in self.errorOccured = false })
+            .filter{ _ in self.errorOccured == false }
+            .debug("⭐️ searchBarTextFiled 2")
             .bind(to: viewModel.textOb)
             .disposed(by: disposeBag)
         
         viewModel.todoCards
             .bind(to: todoTabelView.tableView
-                        .rx
-                        .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-                            cell.configureData(card)
-            }
+                .rx
+                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+                    cell.configureData(card)
+                }
+                .disposed(by: disposeBag)
+        
+        viewModel.errEvent
+            .subscribe(onNext: { [weak self] error in
+                self?.handleError(error)
+            })
             .disposed(by: disposeBag)
-            
+        
     }
     
     override func setProperty() {
@@ -173,6 +182,7 @@ extension MainVC {
 //MARK: - Custom Method
 extension MainVC {
     fileprivate func handleError(_ err: Error) {
+        print(#fileID, #function, #line, "- err: \(err)")
         
         if let networkErr : NetworkError = err as? NetworkError {
             switch networkErr {
@@ -182,8 +192,17 @@ extension MainVC {
                 print(#fileID, #function, #line, "- requestFailed")
             case .unknown(let err):
                 print(#fileID, #function, #line, "- err \(String(describing: err))")
+            case .noContent:
+                print(#fileID, #function, #line, "- no contents")
             }
-            Utils.shared.presentErrorAlert(parentVC: self, networkErr: networkErr)
+            
+            Utils.shared.presentErrorAlert(parentVC: self,
+                                           networkErr: networkErr, confirmAction: { [weak self] _ in
+                self?.errorOccured = true
+                
+//                self?.searchBar.searchBarTextFiled.text = ""
+//                self?.searchBar.searchBarTextFiled.resignFirstResponder()
+            })
         }
     }
 }

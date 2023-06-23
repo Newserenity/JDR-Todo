@@ -24,20 +24,54 @@ final class MainVM {
     
     init(){
         
+        // 검색 api
         textOb
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-            .flatMapLatest { text in
-                if text.isEmpty {
-                    return NetworkManager.shared.getTodos()
-                } else {
-                    return NetworkManager.shared.todoFilter(query: text)
+            .debug("⭐️ textOb")
+            .filter{ $0.count > 0 }
+            .flatMap{
+                return NetworkManager.shared.todoFilter(query: $0)
+                            .catch { error in
+                            self.errEvent.accept(error)
+                            return Observable.just([])
                 }
             }
-            .catch { error in
-                self.errEvent.accept(error)
-                return Observable.just([])
-            }
+            .debug("⭐️ 들어옴")
             .bind(to: todoCards)
             .disposed(by: disposeBag)
+        
+        textOb
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .filter{ $0.count == 0 }
+            .flatMap{ _ in
+                return NetworkManager.shared.getTodos()
+                            .catch { error in
+                            self.errEvent.accept(error)
+                            return Observable.just([])
+                }
+            }
+            .debug("⭐️ 들어옴")
+            .bind(to: todoCards)
+            .disposed(by: disposeBag)
+        
+//        textOb
+//            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+//            .flatMap { text in
+//                if text.isEmpty {
+//                    return NetworkManager.shared.getTodos()
+//                                .catch { error in
+//                                self.errEvent.accept(error)
+//                                return Observable.just([])
+//                    }
+//                } else {
+//                    return NetworkManager.shared.todoFilter(query: text)
+//                                .catch { error in
+//                                self.errEvent.accept(error)
+//                                return Observable.just([])
+//                    }
+//                }
+//            }
+//            .bind(to: todoCards)
+//            .disposed(by: disposeBag)
     }
 }

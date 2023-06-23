@@ -19,6 +19,7 @@ import Foundation
 enum NetworkError: Error {
     case invalidResponse
     case requestFailed
+    case noContent
     case unknown(err: Error?)
     
     // 에러 정보
@@ -27,6 +28,7 @@ enum NetworkError: Error {
         case .invalidResponse:  return "유효하지 않는 응답입니다"
         case .requestFailed:    return "요청 실패입니다"
         case .unknown(let err as NSError): return "알 수 없는 에러입니다 : \(err.code)"
+        case .noContent: return "Response 값이 비어있습니다"
         default: return ""
         }
     }

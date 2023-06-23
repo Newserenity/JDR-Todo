@@ -27,11 +27,12 @@ final class Utils {
      ```
      */
     func presentErrorAlert(parentVC: UIViewController,
-                           networkErr: NetworkError){
+                           networkErr: NetworkError,
+                           confirmAction: ((UIAlertAction) -> Void)? = nil){
+        
         let alert = UIAlertController(title: "에러", message: networkErr.errorInfo, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-        NSLog("The \"OK\" alert occured.")
-        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: confirmAction))
+        
         parentVC.present(alert, animated: true, completion: nil)
     }
     
