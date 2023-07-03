@@ -86,21 +86,19 @@ final class MainVC: BaseVC {
             .rx
             .text
             .orEmpty
-            .debug("⭐️ searchBarTextFiled 1")
             .distinctUntilChanged()
             .do(onNext: { _ in self.errorOccured = false })
             .filter{ _ in self.errorOccured == false }
-            .debug("⭐️ searchBarTextFiled 2")
             .bind(to: viewModel.textOb)
             .disposed(by: disposeBag)
         
-        viewModel.todoCards
-            .bind(to: todoTabelView.tableView
-                .rx
-                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-                    cell.configureData(card)
-                }
-                .disposed(by: disposeBag)
+//        viewModel.todoCards
+//            .bind(to: todoTabelView.tableView
+//                .rx
+//                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+//                    cell.configureData(card)
+//                }
+//                .disposed(by: disposeBag)
         
         viewModel.errEvent
             .subscribe(onNext: { [weak self] error in

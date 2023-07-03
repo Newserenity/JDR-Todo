@@ -12,10 +12,6 @@ final class SearchFilterVC: UIViewController {
     
     static var shared = SearchFilterVC()
     
-//    private var dimView = UIView().then {
-//        $0.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
-//    }
-    
     private var dimView = UIVisualEffectView().then {
         $0.effect = UIBlurEffect(style: .systemUltraThinMaterialDark)
       }
