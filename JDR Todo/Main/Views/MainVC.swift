@@ -89,22 +89,23 @@ final class MainVC: BaseVC {
             .distinctUntilChanged()
             .do(onNext: { _ in self.errorOccured = false })
             .filter{ _ in self.errorOccured == false }
-            .bind(to: viewModel.textOb)
+            .bind(to: MainVM.share.textOb)
             .disposed(by: disposeBag)
         
-//        viewModel.todoCards
-//            .bind(to: todoTabelView.tableView
-//                .rx
-//                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-//                    cell.configureData(card)
-//                }
-//                .disposed(by: disposeBag)
+        MainVM.share.todoCards
+            .bind(to: todoTabelView.tableView
+                .rx
+                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+                    cell.configureData(card)
+                }
+                .disposed(by: disposeBag)
         
-        viewModel.errEvent
+        MainVM.share.errEvent
             .subscribe(onNext: { [weak self] error in
                 self?.handleError(error)
             })
             .disposed(by: disposeBag)
+    
         
     }
     
@@ -197,9 +198,6 @@ extension MainVC {
             Utils.shared.presentErrorAlert(parentVC: self,
                                            networkErr: networkErr, confirmAction: { [weak self] _ in
                 self?.errorOccured = true
-                
-//                self?.searchBar.searchBarTextFiled.text = ""
-//                self?.searchBar.searchBarTextFiled.resignFirstResponder()
             })
         }
     }

@@ -53,13 +53,13 @@ final class TodoTabelView: BaseView {
     }
     
     override func bindUI() {
-        MainVM.share.todoCards
-            .bind(to: self.tableView
-                .rx
-                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-                    cell.configureData(card)
-                }
-                .disposed(by: disposeBag)
+//        MainVM.share.todoCards
+//            .bind(to: self.tableView
+//                .rx
+//                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+//                    cell.configureData(card)
+//                }
+//                .disposed(by: disposeBag)
         
         tableView
             .rx
