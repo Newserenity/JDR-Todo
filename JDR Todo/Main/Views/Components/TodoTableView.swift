@@ -53,14 +53,24 @@ final class TodoTabelView: BaseView {
     }
     
     override func bindUI() {
-//        MainVM.share.todoCards
-//            .bind(to: self.tableView
-//                .rx
-//                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-//                    cell.configureData(card)
-//                }
-//                .disposed(by: disposeBag)
+        MainVM.share.todoCards
+            .bind(to: self.tableView
+                .rx
+                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+                    cell.configureData(card)
+                }
+                .disposed(by: disposeBag)
         
+        // didSelect
+        tableView
+            .rx
+            .modelSelected(TodoCardModel.self)
+            .subscribe(onNext: { model in
+                print(model)
+            })
+            .disposed(by: disposeBag)
+        
+                
         tableView
             .rx
             .didScroll
@@ -110,18 +120,18 @@ extension TodoTabelView: UITableViewDelegate {
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction, changeStatusAction])
         return configuration
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
-            
-            let detailViewController = UIViewController()
-            
-            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                if let sceneDelegate = scene.delegate as? SceneDelegate {
-                    sceneDelegate.window?.rootViewController?.present(detailViewController, animated: true, completion: nil)
-                }
-            }
-    }
+    //FIXME: RX로 처리하는게 나아보임 line: 65 참고
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//            tableView.deselectRow(at: indexPath, animated: true)
+//
+//            let detailViewController = UIViewController()
+//
+//            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+//                if let sceneDelegate = scene.delegate as? SceneDelegate {
+//                    sceneDelegate.window?.rootViewController?.present(detailViewController, animated: true, completion: nil)
+//                }
+//            }
+//    }
 }
 
 extension TodoTabelView: UIScrollViewDelegate {

@@ -16,7 +16,7 @@ import RxCocoa
  *##화면 명: JDR TODO 메인화면 (TODO카드뷰, 검색, TODO추가 및 삭제)
  */
 final class MainVC: BaseVC {
-    
+    //TODO: 보통 SearchBar 같은 경우 UISearchController를 이용하여 처리하긴 하는데 Navigation이 가려진 경우에는 어떤걸 처리해야할지 모르겠음 직접 구현해야하는지 확인 별도 확인 필요
     fileprivate let searchBar = SearchBarView()
     fileprivate let todoTabelView = TodoTabelView()
     fileprivate var viewModel: MainVM
@@ -71,13 +71,15 @@ final class MainVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // navbar hide setting
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        //FIXME: 의미 없는 로직 {BaseVC에서 이미 hidden 시켜주고 있음}
+//        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // navbar hide setting
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        //FIXME: 의미 없는 로직 {BaseVC에서 이미 hidden 시켜주고 있음}
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func bindUI() {
@@ -92,13 +94,14 @@ final class MainVC: BaseVC {
             .bind(to: MainVM.share.textOb)
             .disposed(by: disposeBag)
         
-        MainVM.share.todoCards
-            .bind(to: todoTabelView.tableView
-                .rx
-                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
-                    cell.configureData(card)
-                }
-                .disposed(by: disposeBag)
+        //FIXME: 테이블 뷰 관련 fetch로직은 테이블 뷰에서 처리하는게 나아보임
+//        MainVM.share.todoCards
+//            .bind(to: todoTabelView.tableView
+//                .rx
+//                .items(cellIdentifier: IDENTIFIER.TODO_TV_CELL, cellType: TodoTableViewCell.self)) { index, card, cell in
+//                    cell.configureData(card)
+//                }
+//                .disposed(by: disposeBag)
         
         MainVM.share.errEvent
             .subscribe(onNext: { [weak self] error in
@@ -134,14 +137,17 @@ final class MainVC: BaseVC {
             $0.height.equalTo(50)
         }
 
-        titleLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-        }
-            
-        btnStackView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.height.equalTo(20)
-        }
+        //FIXME: StackView를 사용했으면 그 안의 내용물은 웬만해서는 오토레이앙웃을 지정해주지 않음 (지정하더라도 높이정도) stackView.distribution = .fill 의 경우 stackView안의 view를 전부 채워주기 떄문 (`edgs.equalToSuperView()`와 동일)
+        //fil
+//        titleLabel.snp.makeConstraints {
+//            $0.centerY.equalToSuperview()
+//        }
+           
+        //FIXME: 현재 topBarStackView에서 높이를 50으로 지정해주었기 때문에 `height.equalTo(20)`부분은 오토레이아웃 오류가 발생 {StackView의 특징 때문} 각 내부요소들의 높이값을 서로 다르게 하고 싶으면 StackView대신 UIView가 적합!
+//        btnStackView.snp.makeConstraints {
+//            $0.centerY.equalToSuperview()
+//            $0.height.equalTo(20)
+//        }
         
         searchBar.snp.makeConstraints {
             $0.top.equalTo(topBarStackView.snp.bottom).offset(5)
